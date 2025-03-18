@@ -4,26 +4,32 @@ import { Input } from "@/components/ui/input";
 import { CiSearch } from "react-icons/ci";
 import { Moon } from "lucide-react";
 
-export const Nav = ({}) => {
+export const Nav = () => {
   return (
-    <div className="w-[1440px] h-[59px] py-4 flex justify-between items-center">
-      <div className="flex w-[1280px] max-w-[1280px] items-center gap-2">
+    <div className="flex justify-between items-center w-full h-[59px] px-20">
+      <div className="gap-2 flex">
         <img src="film.png" />
-        <p className="text-[#4338CA] text-[16px] font-bold italic">Movie Z</p>
+        <p className="text-[#4338CA] text-[16px] italic font-bold">Movie Z</p>
       </div>
-      <div className="flex justify-between items-center">
-        <Button className="flex w-[97px] h-[36px] px-2 py-4 justify-center items-center gap-2 rounded-[6px] border-2 bg-[#FFF] text-black">
+
+      <div className="flex gap-3 items-center">
+        <Button className="flex w-[97px] h-[36px] py-2 px-4 text-[14px] font-medium text-[#18181B] justify-center items-center gap-2 shadow-md rounded-sm border border-gray-300 bg-[#FFF]">
           <HiOutlineChevronDown /> Genre
         </Button>
-        <CiSearch />
-        <Input
-          type="search"
-          placeholder=" Search..."
-          className="w-[379px] h-[36px] py-[12px] items-center rounded-2xl bg-[#FFF]"
-        ></Input>
+        <div className="relative w-[379px]">
+          <CiSearch className="absolute left-3 top-2.5 transform-translate-y-1/2" />
+          <Input
+            type="text"
+            placeholder="Search.."
+            className="w-full pl-10 py-2 border border-gray-300 font-normal rounded-sm text-[14px] shadow-md"
+          />
+        </div>
       </div>
-      <div className="flex">
-        <Moon />
+
+      <div>
+        <button className="p-3 rounded-2xl border border-gray-300 shadow-md hover:bg-gray-100 transition">
+          <Moon className="w-5 h-5 text-gray-700" />
+        </button>
       </div>
     </div>
   );
