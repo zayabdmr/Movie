@@ -8,19 +8,18 @@ type SlideProps = {
 
 export const Slide = ({ image, title, rating }: SlideProps) => {
   return (
-    <div>
-      <div className="w-[230px] h-[340px]">
-        <img src={image} />
-      </div>
-      <div className="pt-2 px-2 ">
-        <div className="flex items-center gap-[2px]">
+    <div className="bg-white rounded-lg shadow-md overflow-hidden">
+      <img src={image} className="w-full h-auto" />
+
+      <div className="pt-2 px-2 gap-[3px]">
+        <div className="flex items-center gap-[4px]">
           <Star className="text-yellow-400 fill-yellow-400" />
           <p className="text-[14px] text-[#09090B] font-medium">{rating}</p>
-          <p className="text-[12px] font-normal">/10</p>
+          <p className="text-[12px] text-[#71717A] font-normal">/10</p>
         </div>
-        <div className="w-[100%] h-[60px] text-[18px] text-[#09090B] font-normal">
+        <h3 className="w-[100%] h-[60px] text-[18px] text-[#09090B] font-normal">
           {title}
-        </div>
+        </h3>
       </div>
     </div>
   );

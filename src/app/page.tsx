@@ -1,6 +1,9 @@
+import { Footer } from "./components/Footer";
 import { Nav } from "./components/Nav";
+import Popular from "./components/Popular";
 import { Poster } from "./components/Poster";
-import { Upcoming } from "./components/Upcoming";
+import TopRated from "./components/TopRared";
+import Upcoming from "./components/Upcoming";
 
 export default function Home() {
   return (
@@ -8,11 +11,16 @@ export default function Home() {
       <div>
         <Nav />
       </div>
-      <div>
+      <div className="w-full min-h-screen">
         <Poster />
       </div>
       <div className="pt-[52px]">
         <Upcoming />
+        <Popular />
+        <TopRated />
+      </div>
+      <div className="pt-[51px]">
+        <Footer />
       </div>
     </div>
   );
