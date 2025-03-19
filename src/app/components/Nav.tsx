@@ -13,7 +13,7 @@ export const Nav = () => {
       </div>
 
       <div className="flex gap-3 items-center">
-        <Button className="flex w-[97px] h-[36px] py-2 px-4 text-[14px] font-medium text-[#18181B] justify-center items-center gap-2 shadow-md rounded-sm border border-gray-300 bg-[#FFF]">
+        <Button className="flex w-[97px] h-[36px] py-2 px-4 text-[14px] font-medium text-[#18181B] justify-center items-center gap-2 shadow-md rounded-sm border border-gray-300 bg-[#FFF]  hover:bg-gray-300">
           <HiOutlineChevronDown /> Genre
         </Button>
         <div className="relative w-[379px]">

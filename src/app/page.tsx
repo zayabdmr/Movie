@@ -1,5 +1,6 @@
 import { Nav } from "./components/Nav";
 import { Poster } from "./components/Poster";
+import { Upcoming } from "./components/Upcoming";
 
 export default function Home() {
   return (
@@ -10,7 +11,9 @@ export default function Home() {
       <div>
         <Poster />
       </div>
-      <h3 className="text-[24px] font-semibold pl-20 pt-[52px]">Upcoming </h3>
+      <div className="pt-[52px]">
+        <Upcoming />
+      </div>
     </div>
   );
 }
