@@ -34,7 +34,7 @@ const movies = [
 
 export default function Popular() {
   return (
-    <div className="max-w-6xl mx-auto px-[8opx] pt-[52px]">
+    <div className="max-w-6xl mx-auto px-[80px] pt-[52px]">
       <div className="flex justify-between items-center">
         <h2 className="text-[24px] font-semibold pb-[32px]">Popular</h2>
         <Button
