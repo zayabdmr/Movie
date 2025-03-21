@@ -1,40 +1,39 @@
 "use client";
 import { Slide } from "./Slide";
 import { Button } from "@/components/ui/button";
+import axios from "axios";
 import { ArrowRight } from "lucide-react";
+import { useEffect, useState } from "react";
 
-const movies = [
-  { title: "The Shawshank Redemption", image: "popular1.png", rating: 6.9 },
-  {
-    title: "The Godfather",
-    image: "popular2.png",
-    rating: 6.9,
-  },
-  { title: "The Dark Knight", image: "popular3.png", rating: 6.9 },
-  { title: "12 Angry Men", image: "popular4.png", rating: 6.9 },
-  {
-    title: "The Lord of the Rings: The  Return of the Kin",
-    image: "popular5.png",
-    rating: 6.9,
-  },
-  { title: "Internstellar", image: "popular6.png", rating: 6.9 },
-  { title: "Se7en", image: "popular7.png", rating: 6.9 },
-  {
-    title: "It’s a Wonderful life",
-    image: "popular8.png",
-    rating: 6.9,
-  },
-  { title: "Seven samurai", image: "popular9.png", rating: 6.9 },
-  {
-    title: "The Silence of the Lambs",
-    image: "popular10.png",
-    rating: 6.9,
-  },
-];
+type myTypes = {
+  adult: boolean;
+  backdrop_path: string | null;
+  genre_ids: number[];
+  id: number;
+  original_language: string;
+  original_title: string;
+  overview: string;
+  popularity: number;
+  poster_path: string | null;
+  release_date: string;
+  title: string;
+  video: boolean;
+  vote_average: number;
+  vote_count: number;
+};
 
 export default function Popular() {
+  const [movieData, setMovieData] = useState<myTypes[]>();
+
+  useEffect(() => {
+    axios
+      .get(
+        "https://api.themoviedb.org/3/movie/popular?language=en-US&page=1&api_key=d67d8bebd0f4ff345f6505c99e9d0289"
+      )
+      .then((res) => setMovieData(res.data.results));
+  });
   return (
-    <div className="max-w-6xl mx-auto px-[80px] pt-[52px]">
+    <div className="w-screen px-[80px] pt-[52px]">
       <div className="flex justify-between items-center">
         <h2 className="text-[24px] font-semibold pb-[32px]">Popular</h2>
         <Button
@@ -46,12 +45,11 @@ export default function Popular() {
       </div>
 
       <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-[32px]">
-        {movies.map((movie, index) => (
+        {movieData?.slice(0, 10).map((value, index) => (
           <Slide
-            key={index}
-            title={movie.title}
-            image={movie.image}
-            rating={movie.rating}
+            title={value.title}
+            image={`https://image.tmdb.org/t/p/original${value.poster_path}`}
+            rating={value.vote_average}
           />
         ))}
       </div>

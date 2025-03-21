@@ -1,36 +1,39 @@
 "use client";
 import { Slide } from "./Slide";
 import { Button } from "@/components/ui/button";
+import axios from "axios";
 import { ArrowRight } from "lucide-react";
+import { useEffect, useState } from "react";
 
-const movies = [
-  { title: "Pulp Fiction", image: "top1.png", rating: 6.9 },
-  {
-    title: "The Lord of the Rings: Fellowship of the Kings",
-    image: "top2.png",
-    rating: 6.9,
-  },
-  { title: "The Good, the Bad and the Ugly", image: "top3.png", rating: 6.9 },
-  { title: "Forrest Gump", image: "top4.png", rating: 6.9 },
-  { title: "Fight Club", image: "top5.png", rating: 6.9 },
-  { title: "Saving Private Ryan", image: "top6.png", rating: 6.9 },
-  { title: "City of God", image: "top7.png", rating: 6.9 },
-  {
-    title: "The Green Mile",
-    image: "top8.png",
-    rating: 6.9,
-  },
-  { title: "Life is Beautiful", image: "top9.png", rating: 6.9 },
-  {
-    title: "Terminator 2: Judgement Day",
-    image: "top10.png",
-    rating: 6.9,
-  },
-];
+type myTypes = {
+  adult: boolean;
+  backdrop_path: string | null;
+  genre_ids: number[];
+  id: number;
+  original_language: string;
+  original_title: string;
+  overview: string;
+  popularity: number;
+  poster_path: string | null;
+  release_date: string;
+  title: string;
+  video: boolean;
+  vote_average: number;
+  vote_count: number;
+};
 
 export default function TopRated() {
+  const [movieData, setMovieData] = useState<myTypes[]>();
+
+  useEffect(() => {
+    axios
+      .get(
+        "https://api.themoviedb.org/3/movie/top_rated?language=en-US&page=1&api_key=d67d8bebd0f4ff345f6505c99e9d0289"
+      )
+      .then((res) => setMovieData(res.data.results));
+  });
   return (
-    <div className="max-w-6xl mx-auto px-[8opx] pt-[52px]">
+    <div className="w-screen px-[80px] pt-[52px]">
       <div className="flex justify-between items-center">
         <h2 className="text-[24px] font-semibold pb-[32px]">Top Rated </h2>
         <Button
@@ -42,12 +45,11 @@ export default function TopRated() {
       </div>
 
       <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-[32px]">
-        {movies.map((movie, index) => (
+        {movieData?.slice(0, 10).map((value, index) => (
           <Slide
-            key={index}
-            title={movie.title}
-            image={movie.image}
-            rating={movie.rating}
+            title={value.title}
+            image={`https://image.tmdb.org/t/p/original${value.poster_path}`}
+            rating={value.vote_average}
           />
         ))}
       </div>
