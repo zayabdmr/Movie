@@ -47,6 +47,7 @@ export default function Upcoming() {
       <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-[32px]">
         {movieData?.slice(0, 10).map((value, index) => (
           <Slide
+            key={value.id}
             title={value.title}
             image={`https://image.tmdb.org/t/p/original${value.poster_path}`}
             rating={value.vote_average}

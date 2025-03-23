@@ -40,7 +40,7 @@ export function Poster() {
       .then((res) => setMovieData(res.data.results));
   });
   return (
-    <div className="w-full h-screen flex items-center justify-center overflow-hidden">
+    <div className="w-full h-[700px] flex items-center justify-center overflow-hidden pt-[24px]">
       <div className="w-full h-full">
         <Carousel className="w-full h-full">
           <CarouselContent className="h-full">
