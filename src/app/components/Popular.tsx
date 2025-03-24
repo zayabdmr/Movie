@@ -1,11 +1,10 @@
 "use client";
-import { Slide } from "./Slide";
+import { MovieCard } from "./MovieCard";
 import { Button } from "@/components/ui/button";
 import axios from "axios";
 import { ArrowRight } from "lucide-react";
 import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
-import { log } from "node:console";
 
 type myTypes = {
   id: number;
@@ -32,8 +31,6 @@ export const Popular = ({}: any) => {
       .catch((err) => console.error("Error fetching movies:", err));
   }, []);
 
-  console.log(movieData, "Popular MOVIES");
-
   return (
     <div className="w-screen px-[80px] pt-[52px]">
       <div className="flex justify-between items-center">
@@ -46,9 +43,9 @@ export const Popular = ({}: any) => {
         </Button>
       </div>
 
-      <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-[32px]">
+      <div className=" flex flex-wrap justify-between gap-8">
         {movieData?.slice(0, 10).map((value: any) => (
-          <Slide
+          <MovieCard
             key={value.title}
             title={value.title}
             id={value.id}

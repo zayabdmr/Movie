@@ -57,7 +57,7 @@ export const Nav = ({}) => {
   };
 
   return (
-    <div className="flex justify-between items-center w-full h-[59px] px-20">
+    <div className="flex justify-between items-center w-full h-[59px] px-20 ">
       <div className="flex gap-2 items-center text-[#4338CA]">
         <Film />
         <p className="text-[16px] italic font-bold">Movie Z</p>

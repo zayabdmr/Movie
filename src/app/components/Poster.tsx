@@ -8,9 +8,10 @@ import {
   CarouselPrevious,
 } from "@/components/ui/carousel";
 
-import { Poster_word } from "./Poster_word";
 import axios from "axios";
 import { useEffect, useState } from "react";
+import { Poster_word } from "./Poster_word";
+import { count } from "console";
 
 type myTypes = {
   overview: string;
@@ -33,10 +34,10 @@ export function Poster() {
   return (
     <div className="w-full h-[900px] flex items-center justify-center overflow-hidden pt-[24px]">
       <div className="w-full h-full">
-        <Carousel className="w-full h-full">
+        <Carousel className="w-full ">
           <CarouselContent className="h-full">
             {movieData?.slice(0, 3).map((value, index) => (
-              <CarouselItem key={index} className="w-full h-screen">
+              <CarouselItem key={index} className="w-full h-[800px]">
                 <div className="w-full h-screen">
                   <Poster_word
                     title={value.title}
@@ -48,9 +49,17 @@ export function Poster() {
               </CarouselItem>
             ))}
           </CarouselContent>
-          <CarouselPrevious className="left-[44px]" />
-          <CarouselNext className="right-[44px]" />
+          <CarouselPrevious className="left-[44px] w-[40px] h-[40px]" />
+          <CarouselNext className="right-[44px] w-[40px] h-[40px]" />
         </Carousel>
+
+        {/* <div className="flex justify-center gap-1 mt-4">
+          {Array.from({length:count}).map(_index) =>
+          
+          
+          } */}
+        {/* 
+        </div> */}
       </div>
     </div>
   );
