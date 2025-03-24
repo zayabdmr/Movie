@@ -3,9 +3,13 @@ import * as React from "react";
 import { Nav } from "./components/Nav";
 import { Poster } from "./components/Poster";
 import Upcoming from "./components/Upcoming";
-import Popular from "./components/Popular";
+import { Popular } from "./components/Popular";
 import TopRated from "./components/TopRared";
 import { Footer } from "./components/Footer";
+
+// import { Nav } from "./components/Nav";
+// import { Footer } from "./components/Footer";
+// import { MovieDetail } from "./components/MovieDetail";
 
 export default function Home() {
   return (
@@ -19,3 +23,13 @@ export default function Home() {
     </div>
   );
 }
+
+// export default function Home() {
+//   return (
+//     <div>
+//       <Nav />
+//       <MovieDetail />
+//       <Footer />
+//     </div>
+//   );
+// }

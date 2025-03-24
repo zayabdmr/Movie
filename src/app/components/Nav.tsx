@@ -1,3 +1,5 @@
+"use client";
+
 import { Film } from "lucide-react";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
@@ -23,13 +25,20 @@ type genreTypes = {
 
 export const Nav = ({}) => {
   const [genres, setGenres] = useState<genreTypes[]>();
-  useEffect(() => {
-    axios
-      .get(
+  const getGenres = async () => {
+    try {
+      const { data } = await axios.get(
         "https://api.themoviedb.org/3/genre/movie/list?language=en&api_key=d67d8bebd0f4ff345f6505c99e9d0289"
-      )
-      .then((res) => setGenres(res.data.genres))
-      .catch((err) => console.log(`error`, err));
+      );
+      setGenres(data.genres);
+    } catch (err: any) {
+      console.log(err.message);
+    }
+  };
+  console.log(genres);
+
+  useEffect(() => {
+    getGenres();
   }, []);
 
   const [inputValue, setInputValue] = useState("");

@@ -6,20 +6,11 @@ import { ArrowRight } from "lucide-react";
 import { useEffect, useState } from "react";
 
 type myTypes = {
-  adult: boolean;
-  backdrop_path: string | null;
-  genre_ids: number[];
   id: number;
-  original_language: string;
-  original_title: string;
-  overview: string;
-  popularity: number;
   poster_path: string | null;
-  release_date: string;
   title: string;
   video: boolean;
   vote_average: number;
-  vote_count: number;
 };
 
 export default function TopRated() {
@@ -31,7 +22,7 @@ export default function TopRated() {
         "https://api.themoviedb.org/3/movie/top_rated?language=en-US&page=1&api_key=d67d8bebd0f4ff345f6505c99e9d0289"
       )
       .then((res) => setMovieData(res.data.results));
-  });
+  }, []);
   return (
     <div className="w-screen px-[80px] pt-[52px]">
       <div className="flex justify-between items-center">

@@ -13,20 +13,11 @@ import axios from "axios";
 import { useEffect, useState } from "react";
 
 type myTypes = {
-  adult: boolean;
-  backdrop_path: string | null;
-  genre_ids: number[];
-  id: number;
-  original_language: string;
-  original_title: string;
   overview: string;
-  popularity: number;
   poster_path: string | null;
-  release_date: string;
   title: string;
   video: boolean;
   vote_average: number;
-  vote_count: number;
 };
 
 export function Poster() {
@@ -38,9 +29,9 @@ export function Poster() {
         "https://api.themoviedb.org/3/movie/now_playing?language=en-US&page=1&api_key=d67d8bebd0f4ff345f6505c99e9d0289"
       )
       .then((res) => setMovieData(res.data.results));
-  });
+  }, []);
   return (
-    <div className="w-full h-[700px] flex items-center justify-center overflow-hidden pt-[24px]">
+    <div className="w-full h-[900px] flex items-center justify-center overflow-hidden pt-[24px]">
       <div className="w-full h-full">
         <Carousel className="w-full h-full">
           <CarouselContent className="h-full">

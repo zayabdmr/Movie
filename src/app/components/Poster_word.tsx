@@ -1,6 +1,6 @@
 "use client";
 import * as React from "react";
-import { Star } from "lucide-react";
+import { Star, Video } from "lucide-react";
 import { Play } from "lucide-react";
 
 type Poster_wordProps = {
@@ -8,6 +8,7 @@ type Poster_wordProps = {
   rating: number;
   description: string;
   title: string;
+  video: boolean;
 };
 
 export const Poster_word = ({
@@ -15,6 +16,7 @@ export const Poster_word = ({
   rating,
   description,
   title,
+  video,
 }: Poster_wordProps) => {
   return (
     <div className="relative w-full h-screen flex items-center justify-start pl-[130px] text-white">
