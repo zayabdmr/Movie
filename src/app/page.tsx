@@ -1,14 +1,23 @@
 "use client";
+<<<<<<< HEAD
 import { Task1 } from "@/components/Task1";
 import { Task2 } from "@/components/Task2";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
+=======
+
+import { Taskk1 } from "@/components/Taskk1";
+import { Taskk2 } from "@/components/Taskk2";
+import { Input } from "@/components/ui/input";
+
+>>>>>>> 701386fcd88df64edd7951b863c054cc68a0757f
 // import { Footer } from "@/components/Footer";
 // import { Nav } from "@/components/Nav";
 // import { Popular } from "@/components/Popular";
 // import { Poster } from "@/components/Poster";
 // import { TopRated } from "@/components/TopRated";
 // import { Upcoming } from "@/components/Upcoming";
+<<<<<<< HEAD
 // import * as React from "react";
 
 // export default function Home() {
@@ -23,6 +32,42 @@ import { Input } from "@/components/ui/input";
 //     </div>
 //   );
 // }
+=======
+
+import * as React from "react";
+
+// export default function Home() {
+//   return (
+//     <div>
+//       <Nav />
+//       <Poster />
+//       <Upcoming />
+//       <Popular />
+//       <TopRated />
+//       <Footer />
+//     </div>
+//   );
+// }
+
+// daalgavr
+// 1. increment darah uyd count nemegdeh
+// 2. input deer ym bichih uyd utgiig doorn haruulna
+// 3. button deer darah uyd alga bolgood butsaaj haruulna
+// 4.
+
+// 11111111111111111111111111111111111
+
+export default function Home() {
+  return (
+    <div>
+      <Taskk1 />
+      <Taskk2 />
+    </div>
+  );
+}
+
+// console.log(Taskk1);
+>>>>>>> 701386fcd88df64edd7951b863c054cc68a0757f
 
 // 22222222222222222222222222222222
 
@@ -43,6 +88,7 @@ import { Input } from "@/components/ui/input";
 //   );
 // }
 
+<<<<<<< HEAD
 // daalgavr
 // 1. increment darah uyd count nemegdeh
 // 2. input deer ym bichih uyd utgiig doorn haruulna
@@ -97,6 +143,9 @@ import { Input } from "@/components/ui/input";
 // }
 
 // export default Taskk2;
+=======
+// export default InputField;
+>>>>>>> 701386fcd88df64edd7951b863c054cc68a0757f
 
 // 3333333333333333333333333333333
 
