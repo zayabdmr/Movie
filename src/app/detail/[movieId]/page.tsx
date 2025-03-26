@@ -18,7 +18,7 @@
 //   poster_path: string | null;
 // };
 
-// export const Detail = ({}: any) => {
+// export default function Detail() {
 //   const [movieData, setMovieData] = useState<myTypes[]>([]);
 //   const router = useRouter();
 
@@ -31,7 +31,6 @@
 //       .catch((err) => console.error("Error fetching movies:", err));
 //   }, []);
 
-// function Detail({ params: { movieId } }: { params: { movieId: string } }) {
 //   return (
 //     <div>
 //       <Nav />
@@ -39,11 +38,11 @@
 //       <div className="px-[180px] flex flex-col">
 //         <div className="flex justify-between">
 //           <div className="text-[#09090B]">
-//             <h1 className="text-[36px] font-bold">{ title }</h1>
+//             <h1 className="text-[36px] font-bold">{title}</h1>
 //             <p className="text-[18px] font-normal">2024.11.26 · PG · 2h 40m</p>
 //           </div>
 //           <div>
-//             <p className="text-[#09090B] text-[12px] font-medium">Rating</p>
+//                       <p className="text-[#09090B] text-[12px] font-medium">{Rating}</p>
 //             <div className="flex gap-1">
 //               <Star
 //                 fill="yellow"
@@ -59,17 +58,16 @@
 //                     /10
 //                   </span>
 //                 </p>
-//                 <p className="text-[#71717A] text-[12px] font-normal">{ watchCount}</p>
+//                 <p className="text-[#71717A] text-[12px] font-normal">
+//                   {watchCount}
+//                 </p>
 //               </div>
 //             </div>
 //           </div>
 //         </div>
 
 //         <div className="flex gap-[32px] pt-[24px]">
-//           <img
-//             src="{image}"
-//             className="w-[290px] h-[428px] rounded-lg"
-//           />
+//           <img src="{image}" className="w-[290px] h-[428px] rounded-lg" />
 //           <div className="relative w-[760px] h-[428px]">
 //             <img
 //               src="{imageVideo}"
@@ -106,28 +104,22 @@
 //           </p>
 //         </div>
 
-//         <div className="font-normal text-[16px] pt-[20px]">
-//           {description}
-//         </div>
+//         <div className="font-normal text-[16px] pt-[20px]">{description}</div>
 
 //         <div className="text-[#09090B] text-[16px] py-[20px]">
 //           <div className="gap-[53px] flex">
 //             <p className="font-bold">Director</p>
-//             <p className="font-normal">{ directorName}</p>
+//             <p className="font-normal">{directorName}</p>
 //           </div>
 //           <div className="border-b border-[#E4E4E7] w-full"></div>
 //           <div className="gap-[53px] flex pt-[20px]">
 //             <p className="font-bold">Writers</p>
-//             <p className="font-normal">
-//               { writersName}
-//             </p>
+//             <p className="font-normal">{writersName}</p>
 //           </div>
 //           <div className="border-b border-[#E4E4E7] w-full "></div>
 //           <div className="gap-[53px] flex pt-[20px]">
 //             <p className="font-bold">Stars</p>
-//             <p className="font-normal">
-//              {starsName}
-//             </p>
+//             <p className="font-normal">{starsName}</p>
 //           </div>
 //         </div>
 //       </div>
@@ -135,4 +127,4 @@
 //       <Footer />
 //     </div>
 //   );
-// }
+}

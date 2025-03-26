@@ -1,12 +1,11 @@
 "use client";
-import { MovieCard } from "./MovieCard";
+
 import { Button } from "@/components/ui/button";
 import axios from "axios";
 import { ArrowRight } from "lucide-react";
-
 import { useEffect, useState } from "react";
-
 import { useRouter } from "next/navigation";
+import { MovieCard } from "./MovieCard";
 
 type myTypes = {
   id: number;

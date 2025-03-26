@@ -10,8 +10,9 @@ import {
 
 import axios from "axios";
 import { useEffect, useState } from "react";
-import { Poster_word } from "./Poster_word";
+
 import { count } from "console";
+import { Poster_word } from "./Poster_word";
 
 type myTypes = {
   overview: string;
