@@ -4,9 +4,6 @@ import { Footer } from "@/components/Footer";
 import { Nav } from "@/components/Nav";
 import { Popular } from "@/components/Popular";
 import { Poster } from "@/components/Poster";
-// import { Task1 } from "@/components/Task1";
-// import { Task2 } from "@/components/Task2";
-// import { Input } from "@/components/ui/input";
 import { TopRated } from "@/components/TopRated";
 import { Upcoming } from "@/components/Upcoming";
 
@@ -23,6 +20,10 @@ export default function Home() {
   );
 }
 
+// import { Task1 } from "@/components/Task1";
+// import { Task2 } from "@/components/Task2";
+// import { Task3 } from "@/components/Task3";
+
 // daalgavr
 // 1. increment darah uyd count nemegdeh
 // 2. input deer ym bichih uyd utgiig doorn haruulna
@@ -34,6 +35,7 @@ export default function Home() {
 //     <div>
 //       <Task1 />
 //       <Task2 />
+//       <Task3 />
 //     </div>
 //   );
 // }
@@ -56,13 +58,13 @@ export default function Home() {
 // export default taskk1;
 
 // 22222222222222222222222222222222
-
 // import { useState } from "react";
+// import { Input } from "@/components/ui/input";
 
-// function InputField() {
+// function taskk2() {
 //   const [value, setValue] = useState("");
-//   const handleChange = (e) => {
-//     setValue(e.target.value);
+//   const handleChange = (event) => {
+//     setValue(event.target.value);
 //   };
 
 //   return (
@@ -73,15 +75,14 @@ export default function Home() {
 //   );
 // }
 
-// export default InputField;
+// export default taskk2;
 
-// 3333333333333333333333333333333
-
+// // 3333333333333333333333333333333
 // import React from "react";
 // import { useState } from "react";
 
-// function ToggleVisiblity() {
-//   const [number, setNumber] = useState("true");
+// function taskk3() {
+//   const [number, setNumber] = useState(true);
 //   const changeNumber = () => {
 //     return setNumber(!number);
 //   };
@@ -94,7 +95,53 @@ export default function Home() {
 //   );
 // }
 
-// export default ToggleVisiblity;
+// export default taskk3;
 
 // 55555555555555555
 // color change
+
+// import React from "react";
+
+// function taskk5() {
+//   return (
+//     <div>
+//       <select>
+//         <option>red</option>
+//         <option>green</option>
+//         <option>blue</option>
+//         <option>yellow</option>
+//       </select>
+//     </div>
+//   );
+// }
+
+// export default taskk5;
+
+// import React from "react";
+
+// function taskk5() {
+//   const printText = (id: string) => {};
+
+//   return (
+//     <div>
+//       <button
+//         onClick={() => printText("purple-400")}
+//         className="size-10 bg-purple-400"
+//       ></button>
+//       <button
+//         onClick={() => printText("purple-500")}
+//         className="size-10 bg-purple-500"
+//       ></button>
+//       <button
+//         onClick={() => printText("purple-600")}
+//         className="size-10 bg-purple-600"
+//       ></button>
+//       <button
+//         onClick={() => printText("purple-700")}
+//         className="size-10 bg-purple-700"
+//       ></button>
+//     </div>
+//   );
+// }
+
+// export default taskk5;

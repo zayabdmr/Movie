@@ -9,7 +9,7 @@ export const Task2 = () => {
   return (
     <div>
       <Input onChange={handleChange} type="text" />
-      <p>input text: {value}</p>
+      <p>input text: {value.length}</p>
     </div>
   );
 };

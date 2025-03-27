@@ -4,25 +4,29 @@ import axios from "axios";
 import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import { DetailCard } from "@/components/DetailCard";
-import { get } from "http";
 
 type DetailCardProps = {
-  title: string;
-  rating: number;
-  watched: number;
-  poster_path: string | null;
-  count: number;
-  genres: string;
-  description: string;
+  adult: boolean;
+  backdrop_path: string | null;
+  genre_ids: number[];
+  id: string;
+  original_language: string;
+  original_title: string;
   overview: string;
-  writersName: string;
-  starsName: string;
-  id: number;
-  time: number;
+  popularity: number;
+  poster_path: string | null;
+  release_date: string;
+  title: string;
+  video: boolean;
+  vote_average: number;
+  vote_count: number;
+  genres: { id: number; name: string }[];
+  runtime: number;
 };
 
 export default function Detail() {
-  const [movieDetailData, setMovieDetailData] = useState<DetailCardProps>({});
+  const [movieDetailData, setMovieDetailData] =
+    useState<DetailCardProps | null>(null);
 
   const router = useRouter();
 
@@ -40,7 +44,7 @@ export default function Detail() {
       .then((res) => setMovieDetailData(res.data))
       .catch((err) => console.error("Error fetching movies:", err));
   }, []);
-  console.log(movieDetailData, "Data");
+  console.log(movieDetailData);
 
   return (
     <div>
