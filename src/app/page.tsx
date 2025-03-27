@@ -53,18 +53,18 @@ import * as React from "react";
 // 1. increment darah uyd count nemegdeh
 // 2. input deer ym bichih uyd utgiig doorn haruulna
 // 3. button deer darah uyd alga bolgood butsaaj haruulna
-// 4.
+// 4. input dtr ym bicheed bichsen usegnii toog gargah
 
 // 11111111111111111111111111111111111
 
-export default function Home() {
-  return (
-    <div>
-      <Taskk1 />
-      <Taskk2 />
-    </div>
-  );
-}
+// export default function Home() {
+//   return (
+//     <div>
+//       <Taskk1 />
+//       <Taskk2 />
+//     </div>
+//   );
+// }
 
 // console.log(Taskk1);
 >>>>>>> 701386fcd88df64edd7951b863c054cc68a0757f
