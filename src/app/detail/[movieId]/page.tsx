@@ -4,9 +4,16 @@ import axios from "axios";
 import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import { DetailCard } from "@/components/DetailCard";
+import { writer } from "repl";
+
+type crewType = {
+  name: string;
+  job: string;
+  department: string;
+};
 
 type DetailCardProps = {
-  adult: boolean;
+  adult?: boolean;
   backdrop_path: string | null;
   genre_ids: number[];
   id: string;
@@ -22,13 +29,30 @@ type DetailCardProps = {
   vote_count: number;
   genres: { id: number; name: string }[];
   runtime: number;
+  character: string;
+  director: string;
+  cast: crewType[];
+  crew: crewType[];
 };
 
 export default function Detail() {
-  const [movieDetailData, setMovieDetailData] =
-    useState<DetailCardProps | null>(null);
-
+  const [movieDetailData, setMovieDetailData] = useState<DetailCardProps>();
+  const [movieDetailCredits, setMovieDetailCredits] =
+    useState<DetailCardProps>();
   const router = useRouter();
+
+  const directors = movieDetailCredits?.crew.filter(
+    (member) => member.job === "Director"
+  );
+  console.log(directors, "DIRECTOR");
+
+  const writers = movieDetailCredits?.crew.filter(
+    (member) => member.department === "Writing"
+  );
+
+  // const stars = movieDetailCredits?.cast.filter(
+  //   member) => member.character === ""
+  // )
 
   useEffect(() => {
     axios
@@ -41,26 +65,34 @@ export default function Detail() {
       .get(
         `https://api.themoviedb.org/3/movie/278/credits?language=en-US&api_key=d67d8bebd0f4ff345f6505c99e9d0289`
       )
-      .then((res) => setMovieDetailData(res.data))
+      .then((res) => setMovieDetailCredits(res.data))
       .catch((err) => console.error("Error fetching movies:", err));
   }, []);
-  console.log(movieDetailData);
+  console.log(movieDetailData, "data");
+  console.log(movieDetailCredits, "credits");
 
   return (
     <div>
       <DetailCard
-        title={movieDetailData.title}
-        rating={movieDetailData.vote_average}
-        watched={movieDetailData.vote_count}
-        poster_path={`https://image.tmdb.org/t/p/original${movieDetailData.poster_path}`}
-        count={10}
-        genres={movieDetailData.genres}
-        overview={movieDetailData.overview}
-        time={12}
-        directorName={"asd"}
-        writersName={""}
-        starsName={""}
-        id={movieDetailData.id}
+        adult={movieDetailData?.adult}
+        backdrop_path={`https://image.tmdb.org/t/p/original${movieDetailData?.backdrop_path}`}
+        genre_ids={movieDetailData?.genre_ids}
+        id={movieDetailData?.id}
+        original_language={movieDetailData?.original_language}
+        original_title={movieDetailData?.original_title}
+        overview={movieDetailData?.overview}
+        popularity={movieDetailData?.popularity}
+        poster_path={`https://image.tmdb.org/t/p/original${movieDetailData?.poster_path}`}
+        release_date={movieDetailData?.release_date}
+        title={movieDetailData?.title}
+        video={movieDetailData?.video}
+        vote_average={movieDetailData?.vote_average}
+        vote_count={movieDetailData?.vote_count}
+        genres={movieDetailData?.genres}
+        runtime={movieDetailData?.runtime}
+        directors={directors}
+        writers={writers}
+        stars={[]}
       />
     </div>
   );
