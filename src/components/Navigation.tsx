@@ -13,54 +13,47 @@ import {
   DropdownMenuLabel,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
-import { ChangeEvent, useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import axios from "axios";
 import { ChevronRight } from "lucide-react";
 import { useDebounce } from "@uidotdev/usehooks";
+import { SearchMovie } from "./SearchMovie";
+import { useRouter } from "next/navigation";
 
 type genreTypes = {
   id: number;
   name: string;
 };
 
-export const Nav = ({}) => {
-  const [genres, setGenres] = useState<genreTypes[]>();
-  const getGenres = async () => {
-    try {
-      const { data } = await axios.get(
-        "https://api.themoviedb.org/3/genre/movie/list?language=en&api_key=d67d8bebd0f4ff345f6505c99e9d0289"
-      );
-      setGenres(data.genres);
-    } catch (err: any) {
-      console.log(err.message);
-    }
-  };
-  console.log(genres);
+export const Navigation = ({}) => {
+  const [genres, setGenres] = useState<genreTypes[]>([]);
 
-  useEffect(() => {
-    getGenres();
-  }, []);
-
-  const [inputValue, setInputValue] = useState("");
+  const [inputValue, setInputValue] = useState<string>("");
   const debounceInputValue = useDebounce(inputValue, 500);
-
-  const handleOneChange = (event: ChangeEvent<HTMLInputElement>) => {
+  const handleInputValue = (event: React.ChangeEvent<HTMLInputElement>) => {
     setInputValue(event.target.value);
+  };
+  const router = useRouter();
+  const handleOnclick = (id: number) => {
+    router.push(`/genres?genres=${id}&page=1`);
   };
 
   console.log("rerendering ...", debounceInputValue);
 
-  const debounce = (callback: any) => {
-    setTimeout(() => {
-      callback();
-    }, 500);
-  };
+  useEffect(() => {
+    axios
+      .get(
+        "https://api.themoviedb.org/3/genre/movie/list?language=en-US&page=1&api_key=d67d8bebd0f4ff345f6505c99e9d0289"
+      )
+      .then((res) => setGenres(res.data.genres || []))
+      .catch((err) => console.error("Error fetching movies:", err));
+  }, []);
 
   return (
-    <div className="flex justify-between items-center w-full h-[59px] px-20 ">
+    <div className="flex justify-between items-center w-full h-[59px] px-20">
       <div className="flex gap-2 items-center text-[#4338CA]">
         <Film />
-        <p className="text-[16px] italic font-bold">Movie Z</p>
+        <p className="text-4 italic font-bold">Movie Z</p>
       </div>
 
       <div className="flex gap-4 items-center">
@@ -69,7 +62,7 @@ export const Nav = ({}) => {
             <ChevronDown className="w-4 h-4 stroke-[#18181B]" /> Genre
           </DropdownMenuTrigger>
 
-          <DropdownMenuContent className="w-[577px] p-4 flex flex-col gap-4 rounded-md border border-[#E4E4E7] bg-white shadow-lg">
+          <DropdownMenuContent className="w-[577px] pl-[300px] p-4 flex flex-col gap-4 rounded-md border border-[#E4E4E7] bg-white shadow-lg">
             <div>
               <DropdownMenuLabel className="text-[24px] font-semibold text-[#09090B]">
                 Genres
@@ -102,9 +95,12 @@ export const Nav = ({}) => {
           <Input
             placeholder="Search.."
             value={inputValue}
-            onChange={handleOneChange}
-            className="w-full h-[24px] pl-2 bg-transparent border-none focus:ring-0 focus:outline-none text-[14px] text-[#09090B]"
+            onChange={handleInputValue}
+            className="w-full h-[24px] pl-3 bg-transparent border-none focus:ring-0 focus:outline-none text-[14px] text-[#09090B]"
           />
+          <div className="flex flex-col h-fit w-fit absolute top-[52px] left-[566px] z-20 bg-white rounded-[8px]">
+            <SearchMovie inputValue={inputValue} />
+          </div>
         </div>
       </div>
 

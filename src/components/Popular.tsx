@@ -2,10 +2,11 @@
 
 import { Button } from "@/components/ui/button";
 import axios from "axios";
-import { ArrowRight } from "lucide-react";
+
 import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import { MovieCard } from "./MovieCard";
+import { ArrowRight } from "lucide-react";
 
 type myTypes = {
   id: number;
@@ -40,7 +41,8 @@ export const Popular = ({}: any) => {
           className="text-[14px] font-medium text-[#18181B] bg-[#fff]"
           variant="link"
         >
-          See more <ArrowRight />
+          See more
+          <ArrowRight />
         </Button>
       </div>
 
