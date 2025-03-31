@@ -63,18 +63,17 @@ export const DetailCard = ({
                 </span>
               </p>
               <p className="text-[#71717A] text-[12px] font-normal">
-                {vote_count}
+                {vote_count}k
               </p>
             </div>
           </div>
         </div>
       </div>
-
       <div className="flex gap-8 pt-6">
         <img
           src={poster_path}
           alt="Movie Poster"
-          className="rounded-lg w-[290px] h-[428px]"
+          className="w-[290px] h-[428px]"
         />
         <div className="relative w-[760px] h-[428px]">
           <img
@@ -83,34 +82,34 @@ export const DetailCard = ({
             className="rounded-lg w-full h-full"
           />
 
-          <button className="absolute left-[24px] bottom-[24px] flex items-center gap-2 bg-transparent hover:bg-gray-200 transition">
+          <button className="absolute left-[24px] bottom-[24px] flex items-center gap-3 bg-transparent hover:bg-gray-200 transition">
             <div className="w-[40px] h-[40px] bg-[#FFF] rounded-full flex items-center justify-center">
               <Play size={16} color="black" />
             </div>
-            <p className="text-[#FFF] text-4 font-normal">
-              Play trailer <span>{runtime}</span>
+            <p className="text-[#FFF] text-4 font-norma">
+              Play trailer <span className="pl-3">{runtime}</span>
             </p>
           </button>
         </div>
       </div>
 
-      <div className="flex gap-[10px] mt-4">
-        {genres?.map((genre) => (
-          <span
-            key={genre.id}
-            className="bg-gray-200 px-[10px] py-[2px] rounded-full text-[12px] font-semibold"
-          >
-            {genre.name}
-          </span>
-        ))}
-      </div>
-
-      <p className="mt-4 text-gray-800 text-lg">{overview}</p>
-
-      <div className="mt-6">
-        <DetailNames title="Director" people={directors} />
-        <DetailNames title="Writers" people={writers} />
-        <DetailNames title="Stars" people={stars} />
+      <div className="flex flex-col gap-5 pt-8">
+        <div className="flex gap-3">
+          {genres?.map((genre) => (
+            <span
+              key={genre.id}
+              className="px-[10px] py-[2px] rounded-full border text-[12px] font-semibold text-[#09090B]"
+            >
+              {genre.name}
+            </span>
+          ))}
+        </div>
+        <p className=" text-[#09090B] text-4 font-normal">{overview}</p>
+        <div>
+          <DetailNames title="Director" people={directors} />
+          <DetailNames title="Writers" people={writers} />
+          <DetailNames title="Stars" people={stars} />
+        </div>
       </div>
     </div>
   );

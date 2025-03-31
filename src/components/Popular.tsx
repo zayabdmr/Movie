@@ -46,7 +46,7 @@ export const Popular = ({}: any) => {
         </Button>
       </div>
 
-      <div className=" flex flex-wrap justify-between gap-8">
+      <div className=" flex flex-wrap justify-start gap-8">
         {movieData?.slice(0, 10).map((value: any) => (
           <MovieCard
             key={value.title}

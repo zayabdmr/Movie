@@ -2,8 +2,9 @@
 
 import axios from "axios";
 import { useEffect, useState } from "react";
-import { useRouter } from "next/navigation";
+import { useParams } from "next/navigation";
 import { DetailCard } from "@/components/DetailCard";
+import { MoreLikeList } from "@/components/MoreLikeList";
 
 type CrewType = {
   name: string;
@@ -21,6 +22,7 @@ type MovieDetailProps = {
   overview?: string;
   vote_average?: number;
   vote_count?: number;
+  id?: number;
 };
 
 type MovieCreditsProps = {
@@ -33,17 +35,17 @@ export default function Detail() {
     useState<MovieDetailProps | null>(null);
   const [movieDetailCredits, setMovieDetailCredits] =
     useState<MovieCreditsProps | null>(null);
-  const router = useRouter();
+  const params = useParams();
 
   useEffect(() => {
     const fetchMovieDetails = async () => {
       try {
         const [movieRes, creditsRes] = await Promise.all([
           axios.get(
-            `https://api.themoviedb.org/3/movie/278?language=en-US&api_key=d67d8bebd0f4ff345f6505c99e9d0289`
+            `https://api.themoviedb.org/3/movie/${params.movieId}?language=en-US&api_key=d67d8bebd0f4ff345f6505c99e9d0289`
           ),
           axios.get(
-            `https://api.themoviedb.org/3/movie/278/credits?language=en-US&api_key=d67d8bebd0f4ff345f6505c99e9d0289`
+            `https://api.themoviedb.org/3/movie/${params.movieId}/credits?language=en-US&api_key=d67d8bebd0f4ff345f6505c99e9d0289`
           ),
         ]);
         setMovieDetailData(movieRes.data);
@@ -87,6 +89,8 @@ export default function Detail() {
       ) : (
         <p className="text-center text-lg">Loading movie details...</p>
       )}
+
+      <MoreLikeList />
     </div>
   );
 }
