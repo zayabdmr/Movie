@@ -21,6 +21,7 @@ type DetailCardProps = {
   directors?: CrewType[];
   writers?: CrewType[];
   stars?: CrewType[];
+  adult?: boolean;
 };
 
 export const DetailCard = ({
@@ -36,39 +37,51 @@ export const DetailCard = ({
   directors,
   writers,
   stars,
+  adult,
 }: DetailCardProps) => {
   return (
     <div className="max-w-4xl mx-auto p-6">
       <div className="flex justify-between items-center">
-        <div>
-          <h1 className="text-[#09090B] text-[36px] font-bold">{title}</h1>
-          <p className="text-[#09090B] text-[18px] font-normal">
-            {release_date} · PG · {runtime} min
-          </p>
+        <div className="text-[#09090B]">
+          <h1 className="text-[36px] font-bold">{title}</h1>
+
+          <div className="flex gap-1">
+            <p className="text-[18px] font-normal">
+              {`${release_date?.replace(/-/g, ".")} · ${
+                adult ? "NC-17" : "G"
+              } · ${Math.floor(Number(runtime) / 60)}h ${
+                Number(runtime) % 60
+              }m`}
+            </p>
+          </div>
         </div>
 
         <div>
-          <p className="text-[#09090B] text-[12px] font-medium">Rating</p>
+          <p className="text-[#09090B] text-3s font-medium">Rating</p>
           <div className="flex gap-1">
             <Star
               fill="yellow"
               color="yellow"
               className="pt-[6px] size-[28px]"
             />
+
             <div>
               <p className="text-[#09090B] text-[18px] font-semibold">
-                {vote_average}
-                <span className="text-[#71717A] text-[16px] font-normal">
-                  /10
-                </span>
+                {vote_average &&
+                  `${(Math.round(vote_average * 10) / 10).toFixed(1)}`}
+                <span className="text-[#71717A] text-4 font-normal">/10</span>
               </p>
-              <p className="text-[#71717A] text-[12px] font-normal">
-                {vote_count}k
-              </p>
+
+              {vote_count && (
+                <p className="text-[#71717A] text-3 font-normal">
+                  {Math.floor(vote_count / 1000)}k
+                </p>
+              )}
             </div>
           </div>
         </div>
       </div>
+
       <div className="flex gap-8 pt-6">
         <img
           src={poster_path}
@@ -86,7 +99,7 @@ export const DetailCard = ({
             <div className="w-[40px] h-[40px] bg-[#FFF] rounded-full flex items-center justify-center">
               <Play size={16} color="black" />
             </div>
-            <p className="text-[#FFF] text-4 font-norma">
+            <p className="text-[#FFF] text-4 font-normal">
               Play trailer <span className="pl-3">{runtime}</span>
             </p>
           </button>
@@ -104,6 +117,7 @@ export const DetailCard = ({
             </span>
           ))}
         </div>
+
         <p className=" text-[#09090B] text-4 font-normal">{overview}</p>
         <div>
           <DetailNames title="Director" people={directors} />

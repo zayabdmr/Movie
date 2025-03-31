@@ -1,7 +1,7 @@
 "use client";
 
 import axios from "axios";
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { useParams } from "next/navigation";
 import { DetailCard } from "@/components/DetailCard";
 import { MoreLikeList } from "@/components/MoreLikeList";
@@ -22,7 +22,6 @@ type MovieDetailProps = {
   overview?: string;
   vote_average?: number;
   vote_count?: number;
-  id?: number;
 };
 
 type MovieCreditsProps = {

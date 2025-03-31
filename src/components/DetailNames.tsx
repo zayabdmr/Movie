@@ -16,12 +16,12 @@ export const DetailNames = ({
       <p className="w-[64px] text-4 font-bold">{title}:</p>
       {people?.length ? (
         <p className="text-4 font-normal">
-          {people.map((el) => el.name).join(", ")}
+          {people.map((el) => el.name).join(" · ")}
         </p>
       ) : (
-        <p></p>
+        <p>N/A</p>
       )}
     </div>
-    <div className="border-t border-gray-300 w-full pb-5"></div>
+    <div className="border-t border-[#E4E4E7] w-full pb-5"></div>
   </div>
 );

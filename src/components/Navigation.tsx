@@ -19,6 +19,7 @@ import { ChevronRight } from "lucide-react";
 import { useDebounce } from "@uidotdev/usehooks";
 import { SearchMovie } from "./SearchMovie";
 import { useRouter } from "next/navigation";
+import { axiosInstance } from "@/lib/utils";
 
 type genreTypes = {
   id: number;
@@ -41,12 +42,18 @@ export const Navigation = ({}) => {
   console.log("rerendering ...", debounceInputValue);
 
   useEffect(() => {
-    axios
-      .get(
-        "https://api.themoviedb.org/3/genre/movie/list?language=en-US&page=1&api_key=d67d8bebd0f4ff345f6505c99e9d0289"
-      )
-      .then((res) => setGenres(res.data.genres || []))
-      .catch((err) => console.error("Error fetching movies:", err));
+    const fetchMovies = async () => {
+      try {
+        const response = await axiosInstance.get(
+          "genre/movie/list?language=en-US&page=1"
+        );
+        setGenres(response.data.results);
+      } catch (error) {
+        console.error("Error fetching movies:", error);
+      }
+    };
+
+    fetchMovies();
   }, []);
 
   return (

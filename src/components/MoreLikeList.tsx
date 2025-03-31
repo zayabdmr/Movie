@@ -1,12 +1,12 @@
 "use client";
 
 import { Button } from "@/components/ui/button";
-import axios from "axios";
 
 import { useEffect, useState } from "react";
 import { useParams, useRouter } from "next/navigation";
 import { MovieCard } from "./MovieCard";
 import { ArrowRight } from "lucide-react";
+import { axiosInstance, imageUrl } from "@/lib/utils";
 
 type myTypes = {
   id: number;
@@ -27,16 +27,22 @@ export const MoreLikeList = ({}: any) => {
   const params = useParams();
 
   useEffect(() => {
-    axios
-      .get(
-        `https://api.themoviedb.org/3/movie/${params.movieId}/similar?language=en-US&page=1&api_key=d67d8bebd0f4ff345f6505c99e9d0289`
-      )
-      .then((res) => setMovieData(res.data.results))
-      .catch((err) => console.error("Error fetching movies:", err));
+    const fetchMovies = async () => {
+      try {
+        const response = await axiosInstance.get(
+          `movie/${params.movieId}/similar?language=en-US&page=1`
+        );
+        setMovieData(response.data.results);
+      } catch (error) {
+        console.error("Error fetching movies:", error);
+      }
+    };
+
+    fetchMovies();
   }, []);
 
   return (
-    <div className="w-[1380px]  p-6">
+    <div className="max-w-[1380px] mx-auto px-6 py-10">
       <div className="flex justify-between items-center">
         <h2 className="text-[24px] font-semibold pb-[32px]">More like this</h2>
         <Button
@@ -48,13 +54,13 @@ export const MoreLikeList = ({}: any) => {
         </Button>
       </div>
 
-      <div className=" flex flex-wrap justify-center gap-8">
+      <div className="flex flex-wrap justify-start gap-11">
         {movieData?.slice(0, 5).map((value: any) => (
           <MovieCard
-            key={value.title}
+            key={value.id}
             title={value.title}
             id={value.id}
-            image={`https://image.tmdb.org/t/p/original${value.poster_path}`}
+            image={imageUrl(value.poster_path)}
             rating={value.vote_average}
           />
         ))}

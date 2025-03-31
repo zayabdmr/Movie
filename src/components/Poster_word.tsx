@@ -1,6 +1,6 @@
 "use client";
 import * as React from "react";
-import { Star, Video } from "lucide-react";
+import { Star } from "lucide-react";
 import { Play } from "lucide-react";
 
 type Poster_wordProps = {
@@ -8,7 +8,6 @@ type Poster_wordProps = {
   rating: number;
   description: string;
   title: string;
-  video: boolean;
 };
 
 export const Poster_word = ({
@@ -16,7 +15,6 @@ export const Poster_word = ({
   rating,
   description,
   title,
-  video,
 }: Poster_wordProps) => {
   return (
     <div className="relative w-full h-screen flex items-center justify-start pl-[130px] text-white">
@@ -31,7 +29,9 @@ export const Poster_word = ({
 
         <div className="flex items-center pt-[8px] gap-[4px]">
           <Star className="text-yellow-400 fill-yellow-400" />
-          <span className="text-[18px] font-semibold">{rating}</span>
+          <span className="text-[18px] font-semibold">
+            {rating && `${(Math.round(rating * 10) / 10).toFixed(1)}`}
+          </span>
           <span className="text-gray-300">/10</span>
         </div>
 

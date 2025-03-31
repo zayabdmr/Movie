@@ -1,21 +1,21 @@
 "use client";
 
 import { Button } from "@/components/ui/button";
-import axios from "axios";
-import { ArrowRight } from "lucide-react";
 import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import { MovieCard } from "./MovieCard";
+import { ArrowRight } from "lucide-react";
+import { axiosInstance, imageUrl } from "@/lib/utils";
 
 type myTypes = {
   id: number;
   title: string;
   video: boolean;
   vote_average: number;
-  poster_path: string | null;
+  poster_path: string;
 };
 
-export const Upcoming = ({}: any) => {
+export const Upcoming = () => {
   const [movieData, setMovieData] = useState<myTypes[]>([]);
   const router = useRouter();
 
@@ -24,12 +24,18 @@ export const Upcoming = ({}: any) => {
   };
 
   useEffect(() => {
-    axios
-      .get(
-        `https://api.themoviedb.org/3/movie/popular?language=en-US&page=1&api_key=d67d8bebd0f4ff345f6505c99e9d0289`
-      )
-      .then((res) => setMovieData(res.data.results))
-      .catch((err) => console.error("Error fetching movies:", err));
+    const fetchMovies = async () => {
+      try {
+        const response = await axiosInstance.get(
+          "movie/upcoming?language=en-US&page=1"
+        );
+        setMovieData(response.data.results);
+      } catch (error) {
+        console.error("Error fetching movies:", error);
+      }
+    };
+
+    fetchMovies();
   }, []);
 
   return (
@@ -40,17 +46,18 @@ export const Upcoming = ({}: any) => {
           className="text-[14px] font-medium text-[#18181B] bg-[#fff]"
           variant="link"
         >
-          See more <ArrowRight />
+          See more
+          <ArrowRight />
         </Button>
       </div>
 
-      <div className=" flex flex-wrap justify-start gap-8">
-        {movieData?.slice(0, 10).map((value: any) => (
+      <div className="flex flex-wrap justify-start gap-6">
+        {movieData.slice(0, 10).map((value) => (
           <MovieCard
-            key={value.title}
+            key={value.id}
             title={value.title}
             id={value.id}
-            image={`https://image.tmdb.org/t/p/original${value.poster_path}`}
+            image={imageUrl(value.poster_path)}
             rating={value.vote_average}
           />
         ))}

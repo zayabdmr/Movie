@@ -2,42 +2,49 @@
 
 import { Button } from "./ui/button";
 import { useEffect, useState } from "react";
-import axios from "axios";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
 import { ArrowRight, Star } from "lucide-react";
+import { useDebounce } from "@uidotdev/usehooks";
+import { axiosInstance, imageUrl } from "@/lib/utils";
 
 type MovieTypes = {
   id: number;
   title: string;
-  poster_path: string | null;
+  poster_path: string;
   release_date: string;
   vote_average: number;
 };
 
 export const SearchMovie = ({ inputValue }: { inputValue: string }) => {
   const [movieResults, setMovieResults] = useState<MovieTypes[]>([]);
-
+  const debouncedSearch = useDebounce(inputValue, 500);
   const router = useRouter();
 
-  const handleOnclick = (id: number) => {
+  const handleOnClick = (id: number) => {
     router.push(`/details/${id}`);
     setMovieResults([]);
   };
 
   useEffect(() => {
-    if (inputValue.trim() === "") {
+    if (!debouncedSearch.trim()) {
       setMovieResults([]);
       return;
     }
 
-    axios
-      .get(
-        `https://api.themoviedb.org/3/search/movie?query=${inputValue}&language=en-US&page=1&api_key=d67d8bebd0f4ff345f6505c99e9d0289`
-      )
-      .then((res) => setMovieResults(res.data.results || []))
-      .catch((err) => console.error("Error fetching movies:", err));
-  }, [inputValue]);
+    const fetchMovies = async () => {
+      try {
+        const res = await axiosInstance.get(
+          `search/movie?query=${debouncedSearch}&language=en-US&page=1`
+        );
+        setMovieResults(res.data.results || []);
+      } catch (err) {
+        console.error("Error fetching movies:", err);
+      }
+    };
+
+    fetchMovies();
+  }, [debouncedSearch]);
 
   return (
     <div className="w-fit h-fit border border-[#E4E4E7] rounded-sm">
@@ -45,7 +52,7 @@ export const SearchMovie = ({ inputValue }: { inputValue: string }) => {
         <div key={value.id} className="p-3 hover:bg-gray-100 rounded-lg">
           <div className="w-[550px] px-3 rounded-[8px] flex gap-4 bg-white h-fit">
             <Image
-              src={`https://image.tmdb.org/t/p/original${value.poster_path}`}
+              src={imageUrl(value.poster_path)}
               alt={`searchImage`}
               width={70}
               height={100}
@@ -65,7 +72,10 @@ export const SearchMovie = ({ inputValue }: { inputValue: string }) => {
                   />
 
                   <p className="text-[14px] text-[#09090B] font-medium">
-                    {value.vote_average}
+                    {value.vote_average &&
+                      `${(Math.round(value.vote_average * 10) / 10).toFixed(
+                        1
+                      )}`}
                     <span className="text-[12px] text-[#71717A] font-normal">
                       /10
                     </span>
@@ -79,7 +89,7 @@ export const SearchMovie = ({ inputValue }: { inputValue: string }) => {
                 <Button
                   className="text-[14px] font-medium text-[#09090B] gap-[8px]"
                   variant="link"
-                  onClick={() => handleOnclick(value.id)}
+                  onClick={() => handleOnClick(value.id)}
                 >
                   See more <ArrowRight />
                 </Button>
