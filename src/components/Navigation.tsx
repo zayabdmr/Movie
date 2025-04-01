@@ -19,7 +19,6 @@ import { useDebounce } from "@uidotdev/usehooks";
 import { SearchMovie } from "./SearchMovie";
 import { useRouter } from "next/navigation";
 import { axiosInstance } from "@/lib/utils";
-import Link from "next/link";
 
 type genreTypes = {
   id: number;
@@ -35,7 +34,7 @@ export const Navigation = ({}) => {
   };
   const router = useRouter();
   const handleOnclick = (id: number) => {
-    router.push(`/genres?genres=${id}&page=1`);
+    router.push(`/genre?genres=${id}&page=1`);
   };
 
   console.log("rerendering ...", debounceInputValue);
@@ -82,16 +81,15 @@ export const Navigation = ({}) => {
 
             <div className="flex flex-wrap gap-2">
               {genres?.map((genre) => (
-                <Link href="genre">
-                  <Badge
-                    key={genre.id}
-                    variant="outline"
-                    className="flex items-center gap-1 px-3 py-2 text-[12px] text-[#18181B] border-[#D4D4D8]"
-                  >
-                    {genre.name}
-                    <ChevronRight className="w-[14px] h-[14px] opacity-60" />
-                  </Badge>
-                </Link>
+                <Badge
+                  onClick={() => handleOnclick(genre.id)}
+                  key={genre.id}
+                  variant="outline"
+                  className="flex items-center gap-1 px-3 py-2 text-[12px] text-[#18181B] border-[#D4D4D8]"
+                >
+                  {genre.name}
+                  <ChevronRight className="w-[14px] h-[14px] opacity-60" />
+                </Badge>
               ))}
             </div>
           </DropdownMenuContent>
