@@ -23,6 +23,14 @@ export const Popular = () => {
     router.push(`/detail/${movieId}`);
   };
 
+  // const handleOnclick = (id: number) => {
+  //   router.push(`/movieSuggestions?genres=${id}&page=1`);
+  // };
+
+  const handleOnclick = () => {
+    router.push(`/movieSuggestions?page=1`);
+  };
+
   useEffect(() => {
     const fetchMovies = async () => {
       try {
@@ -45,6 +53,7 @@ export const Popular = () => {
         <Button
           className="text-[14px] font-medium text-[#18181B] bg-[#fff]"
           variant="link"
+          onClick={handleOnclick}
         >
           See more
           <ArrowRight />

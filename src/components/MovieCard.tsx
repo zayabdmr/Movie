@@ -11,7 +11,7 @@ type MovieCardProps = {
 export const MovieCard = ({ image, title, rating, id }: MovieCardProps) => {
   return (
     <Link href={`/detail/${id}`}>
-      <div className="bg-white rounded-lg shadow-md overflow-hidden w-[230px]">
+      <div className="bg-white rounded-lg shadow-md overflow-hidden w-[230px] hover:bg-gray-100 transition">
         <img src={image} className="w-full h-auto" />
 
         <div className="p-2">

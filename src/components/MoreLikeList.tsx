@@ -24,6 +24,10 @@ export const MoreLikeList = ({}: any) => {
     router.push(`/detail/${movieId}`);
   };
 
+  const handleOnclick = () => {
+    router.push(`/similarMovieSuggestions?page=1`);
+  };
+
   const params = useParams();
 
   useEffect(() => {
@@ -48,6 +52,7 @@ export const MoreLikeList = ({}: any) => {
         <Button
           className="text-[14px] font-medium text-[#18181B] bg-[#fff]"
           variant="link"
+          onClick={handleOnclick}
         >
           See more
           <ArrowRight />

@@ -34,7 +34,7 @@ export const Navigation = ({}) => {
   };
   const router = useRouter();
   const handleOnclick = (id: number) => {
-    router.push(`/genre?genres=${id}&page=1`);
+    router.push(`/searchFilter?genres=${id}&page=1`);
   };
 
   console.log("rerendering ...", debounceInputValue);
@@ -80,14 +80,14 @@ export const Navigation = ({}) => {
             <div className="border-b border-[#E4E4E7] w-full"></div>
 
             <div className="flex flex-wrap gap-2">
-              {genres?.map((genre) => (
+              {genres?.map((searchFilter) => (
                 <Badge
-                  onClick={() => handleOnclick(genre.id)}
-                  key={genre.id}
+                  onClick={() => handleOnclick(searchFilter.id)}
+                  key={searchFilter.id}
                   variant="outline"
-                  className="flex items-center gap-1 px-3 py-2 text-[12px] text-[#18181B] border-[#D4D4D8]"
+                  className="flex items-center gap-1 px-3 py-2 text-[12px] text-[#18181B] border-[#D4D4D8] hover:bg-gray-200"
                 >
-                  {genre.name}
+                  {searchFilter.name}
                   <ChevronRight className="w-[14px] h-[14px] opacity-60" />
                 </Badge>
               ))}

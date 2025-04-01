@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import { useParams } from "next/navigation";
+import { useParams, useRouter } from "next/navigation";
 import { DetailCard } from "@/components/DetailCard";
 import { MoreLikeList } from "@/components/MoreLikeList";
 import { axiosInstance, imageUrl } from "@/lib/utils";
@@ -37,6 +37,8 @@ export default function Detail() {
   const [movieDetailCredits, setMovieDetailCredits] =
     useState<MovieCreditsProps | null>(null);
   const params = useParams();
+
+  const router = useRouter();
 
   useEffect(() => {
     const fetchMovieDetails = async () => {
