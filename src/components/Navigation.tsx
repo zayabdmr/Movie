@@ -14,12 +14,12 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 import { useEffect, useState } from "react";
-import axios from "axios";
 import { ChevronRight } from "lucide-react";
 import { useDebounce } from "@uidotdev/usehooks";
 import { SearchMovie } from "./SearchMovie";
 import { useRouter } from "next/navigation";
 import { axiosInstance } from "@/lib/utils";
+import Link from "next/link";
 
 type genreTypes = {
   id: number;
@@ -28,7 +28,6 @@ type genreTypes = {
 
 export const Navigation = ({}) => {
   const [genres, setGenres] = useState<genreTypes[]>([]);
-
   const [inputValue, setInputValue] = useState<string>("");
   const debounceInputValue = useDebounce(inputValue, 500);
   const handleInputValue = (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -45,9 +44,9 @@ export const Navigation = ({}) => {
     const fetchMovies = async () => {
       try {
         const response = await axiosInstance.get(
-          "genre/movie/list?language=en-US&page=1"
+          "genre/movie/list?language=en"
         );
-        setGenres(response.data.results);
+        setGenres(response.data.genres);
       } catch (error) {
         console.error("Error fetching movies:", error);
       }
@@ -83,14 +82,16 @@ export const Navigation = ({}) => {
 
             <div className="flex flex-wrap gap-2">
               {genres?.map((genre) => (
-                <Badge
-                  key={genre.id}
-                  variant="outline"
-                  className="flex items-center gap-1 px-3 py-2 text-[12px] text-[#18181B] border-[#D4D4D8]"
-                >
-                  {genre.name}
-                  <ChevronRight className="w-[14px] h-[14px] opacity-60" />
-                </Badge>
+                <Link href="genre">
+                  <Badge
+                    key={genre.id}
+                    variant="outline"
+                    className="flex items-center gap-1 px-3 py-2 text-[12px] text-[#18181B] border-[#D4D4D8]"
+                  >
+                    {genre.name}
+                    <ChevronRight className="w-[14px] h-[14px] opacity-60" />
+                  </Badge>
+                </Link>
               ))}
             </div>
           </DropdownMenuContent>

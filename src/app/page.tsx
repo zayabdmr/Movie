@@ -1,9 +1,7 @@
 "use client";
 import * as React from "react";
 import { Navigation } from "@/components/Navigation";
-
 import { Footer } from "@/components/Footer";
-
 import { Popular } from "@/components/Popular";
 import { Poster } from "@/components/Poster";
 import { TopRated } from "@/components/TopRated";

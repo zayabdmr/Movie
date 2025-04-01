@@ -10,11 +10,11 @@ import {
 
 import { useEffect, useState } from "react";
 import { Poster_word } from "./Poster_word";
-import { axiosInstance } from "@/lib/utils";
+import { axiosInstance, imageUrl } from "@/lib/utils";
 
 type myTypes = {
   overview: string;
-  poster_path: string | null;
+  poster_path: string;
   title: string;
   vote_average: number;
 };
@@ -47,7 +47,7 @@ export function Poster() {
                 <div className="w-full h-screen">
                   <Poster_word
                     title={value.title}
-                    image={`https://image.tmdb.org/t/p/original${value.poster_path}`}
+                    image={imageUrl(value.poster_path)}
                     rating={value.vote_average}
                     description={value.overview}
                   />
