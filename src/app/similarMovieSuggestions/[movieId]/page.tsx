@@ -66,6 +66,7 @@ export default function similarMovieList() {
               id={value.id}
               image={imageUrl(value.poster_path)}
               rating={value.vote_average}
+              className="w-[230px] "
             />
           ))}
         </div>

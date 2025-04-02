@@ -3,9 +3,10 @@
 import { Button } from "@/components/ui/button";
 import { useState } from "react";
 import { useRouter } from "next/navigation";
-import { MovieCard } from "./MovieCard";
+
 import { ArrowRight } from "lucide-react";
 import { imageUrl } from "@/lib/utils";
+import { MovieCard } from "./MovieCard";
 
 type myTypes = {
   id: number;

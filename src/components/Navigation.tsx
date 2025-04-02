@@ -27,6 +27,7 @@ type genreTypes = {
 
 export const Navigation = ({}) => {
   const [genres, setGenres] = useState<genreTypes[]>([]);
+
   const [inputValue, setInputValue] = useState<string>("");
   const debounceInputValue = useDebounce(inputValue, 500);
   const handleInputValue = (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -36,8 +37,6 @@ export const Navigation = ({}) => {
   const handleOnclick = (id: number) => {
     router.push(`/searchFilter?genres=${id}&page=1`);
   };
-
-  console.log("rerendering ...", debounceInputValue);
 
   useEffect(() => {
     const fetchMovies = async () => {
