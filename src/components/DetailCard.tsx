@@ -40,7 +40,7 @@ export const DetailCard = ({
   adult,
 }: DetailCardProps) => {
   return (
-    <div className="max-w-4xl mx-auto p-6">
+    <div className="w-screen py-6 px-[290px]">
       <div className="flex justify-between items-center">
         <div className="text-[#09090B]">
           <h1 className="text-[36px] font-bold">{title}</h1>

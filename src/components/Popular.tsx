@@ -1,11 +1,11 @@
 "use client";
 
 import { Button } from "@/components/ui/button";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { useRouter } from "next/navigation";
 import { MovieCard } from "./MovieCard";
 import { ArrowRight } from "lucide-react";
-import { axiosInstance, imageUrl } from "@/lib/utils";
+import { imageUrl } from "@/lib/utils";
 
 type myTypes = {
   id: number;
@@ -21,30 +21,12 @@ export const Popular = () => {
 
   const handleOneClick = (movieId: number) => {
     router.push(`/detail/${movieId}`);
+    router.push(`/movieSuggestions/${movieId}`);
   };
 
-  // const handleOnclick = (id: number) => {
-  //   router.push(`/movieSuggestions?genres=${id}&page=1`);
-  // };
-
-  const handleOnclick = () => {
-    router.push(`/movieSuggestions?page=1`);
+  const handleOnclick = (movieId: number) => {
+    router.push(`/movieSuggestions/${movieId}`);
   };
-
-  useEffect(() => {
-    const fetchMovies = async () => {
-      try {
-        const response = await axiosInstance.get(
-          "movie/popular?language=en-US&page=1"
-        );
-        setMovieData(response.data.results);
-      } catch (error) {
-        console.error("Error fetching movies:", error);
-      }
-    };
-
-    fetchMovies();
-  }, []);
 
   return (
     <div className="w-screen px-[80px] pt-[52px]">
@@ -53,7 +35,7 @@ export const Popular = () => {
         <Button
           className="text-[14px] font-medium text-[#18181B] bg-[#fff]"
           variant="link"
-          onClick={handleOnclick}
+          onClick={() => handleOnclick(278)}
         >
           See more
           <ArrowRight />

@@ -1,6 +1,7 @@
 "use client";
 
 import { GenresSelector } from "@/components/GenresSelector";
+
 import { Navigation } from "@/components/Navigation";
 
 export default function searchFilter() {

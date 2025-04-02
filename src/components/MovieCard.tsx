@@ -6,12 +6,24 @@ type MovieCardProps = {
   rating: number;
   title: string;
   id: number;
+  className: string;
 };
 
-export const MovieCard = ({ image, title, rating, id }: MovieCardProps) => {
+export const MovieCard = ({
+  image,
+  title,
+  rating,
+  id,
+  className,
+}: MovieCardProps) => {
   return (
     <Link href={`/detail/${id}`}>
-      <div className="bg-white rounded-lg shadow-md overflow-hidden w-[230px] hover:bg-gray-100 transition">
+      <div
+        className={
+          `bg-white rounded-lg shadow-md overflow-hidden w-[230px] hover:bg-gray-100 transition` +
+          className
+        }
+      >
         <img src={image} className="w-full h-auto" />
 
         <div className="p-2">
