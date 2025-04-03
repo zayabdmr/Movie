@@ -10,12 +10,10 @@ import { Upcoming } from "@/components/Upcoming";
 export default function Home() {
   return (
     <div>
-      <Navigation />
       <Poster />
       <Upcoming />
       <Popular />
       <TopRated />
-      <Footer />
     </div>
   );
 }

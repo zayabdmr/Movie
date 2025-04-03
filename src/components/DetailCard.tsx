@@ -70,10 +70,10 @@ export const DetailCard = ({
   useEffect(() => {
     const fetchMovieDetails = async () => {
       try {
-        const [movieRes] = await Promise.all([
-          axiosInstance.get(`movie/${params.movieId}/videos?language=en-US`),
-        ]);
-        setTrailer(movieRes.data);
+        const { data } = await axiosInstance.get(
+          `movie/${params.movieId}/videos?language=en-US`
+        );
+        setTrailer(data.results);
       } catch (error) {
         console.error("Error fetching movie details:", error);
       }
@@ -83,7 +83,7 @@ export const DetailCard = ({
   }, []);
 
   return (
-    <div className="w-screen py-6 px-[290px]">
+    <div className="w-screen ">
       <div className="flex justify-between items-center">
         <div className="text-[#09090B]">
           <h1 className="text-[36px] font-bold">{title}</h1>
@@ -100,7 +100,7 @@ export const DetailCard = ({
         </div>
 
         <div>
-          <p className="text-[#09090B] text-3s font-medium">Rating</p>
+          <p className="text-[#09090B] text-3 font-medium">Rating</p>
           <div className="flex gap-1">
             <Star
               fill="yellow"
@@ -155,7 +155,7 @@ export const DetailCard = ({
                     <iframe
                       width="100%"
                       height="561"
-                      src={`https://www.youtube.com/embed/${Trailer[0]?.key}?si=NXkb2gZ874rf5N7A`}
+                      src={`https://www.youtube.com/embed/${Trailer[0]?.key}`}
                       title="YouTube video player"
                       style={{ borderRadius: 8 }}
                       allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
@@ -173,7 +173,7 @@ export const DetailCard = ({
         </div>
       </div>
 
-      <div className="flex flex-col gap-5 pt-8">
+      <div className="flex flex-col gap-5">
         <div className="flex gap-3">
           {genres?.map((genre) => (
             <span

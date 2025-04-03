@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import { useParams, useRouter } from "next/navigation";
+import { useParams, useRouter, useSearchParams } from "next/navigation";
 import { axiosInstance, imageUrl } from "@/lib/utils";
 import { MovieCard } from "@/components/MovieCard";
 
@@ -29,8 +29,10 @@ type dataTypes = {
 };
 
 export default function similarMovieList() {
+  const searchParams = useSearchParams();
+  let defaultPage = searchParams.get("page");
   const [movieData, setMovieData] = useState<pageType>();
-  const [currentPage, setCurrentPage] = useState(1);
+  const [currentPage, setCurrentPage] = useState(defaultPage);
   const router = useRouter();
   const params = useParams();
 
@@ -82,7 +84,7 @@ export default function similarMovieList() {
             )}
             {currentPage > 4 && (
               <PaginationItem>
-                <PaginationLink>1</PaginationLink>
+                <PaginationLink href="?page=1">1</PaginationLink>
               </PaginationItem>
             )}
             {currentPage > 4 && (

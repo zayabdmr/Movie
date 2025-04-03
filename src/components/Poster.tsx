@@ -89,6 +89,7 @@ type myTypes = {
   poster_path: string;
   title: string;
   vote_average: number;
+  id: string;
 };
 
 export function Poster() {
@@ -119,7 +120,7 @@ export function Poster() {
   const handlePrev = () => {
     setCurrentIndex((prevIndex) => (prevIndex > 0 ? prevIndex - 1 : prevIndex));
   };
-
+  console.log(movieData, "data");
   return (
     <div className="w-full h-[900px] flex items-center justify-center overflow-hidden pt-[24px]">
       <div className="w-full h-full">
@@ -135,6 +136,7 @@ export function Poster() {
               <CarouselItem key={index} className="w-full h-[800px]">
                 <div className="w-full h-screen">
                   <Poster_word
+                    id={value.id}
                     title={value.title}
                     image={imageUrl(value.poster_path)}
                     rating={value.vote_average}

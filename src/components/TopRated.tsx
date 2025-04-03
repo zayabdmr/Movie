@@ -59,6 +59,7 @@ export const TopRated = () => {
             id={value.id}
             image={imageUrl(value.poster_path)}
             rating={value.vote_average}
+            className="w-[280px]"
           />
         ))}
       </div>

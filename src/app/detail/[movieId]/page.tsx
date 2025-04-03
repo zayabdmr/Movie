@@ -5,8 +5,6 @@ import { useParams, useRouter } from "next/navigation";
 import { DetailCard } from "@/components/DetailCard";
 import { MoreLikeList } from "@/components/MoreLikeList";
 import { axiosInstance, imageUrl } from "@/lib/utils";
-import { Navigation } from "@/components/Navigation";
-import { Footer } from "@/components/Footer";
 
 type CrewType = {
   name: string;
@@ -67,8 +65,7 @@ export default function Detail() {
   const stars = movieDetailCredits?.cast?.slice(0, 3) || [];
 
   return (
-    <div>
-      <Navigation />
+    <div className="px-[180px]">
       {movieDetailData ? (
         <DetailCard
           {...movieDetailData}
@@ -91,8 +88,6 @@ export default function Detail() {
       )}
 
       <MoreLikeList />
-
-      <Footer />
     </div>
   );
 }

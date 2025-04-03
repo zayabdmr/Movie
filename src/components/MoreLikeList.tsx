@@ -48,7 +48,7 @@ export const MoreLikeList = ({}: any) => {
   }, []);
 
   return (
-    <div className="max-w-[1380px] mx-auto px-[180px] py-10">
+    <div className="max-w-[1380px] mx-auto  pb-[52px]">
       <div className="flex justify-between items-center">
         <h2 className="text-[24px] font-semibold pb-[32px]">More like this</h2>
         <Button
