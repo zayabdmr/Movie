@@ -6,14 +6,13 @@ import { Popular } from "@/components/Popular";
 import { Poster } from "@/components/Poster";
 import { TopRated } from "@/components/TopRated";
 import { Upcoming } from "@/components/Upcoming";
+import { MainPageMovies } from "@/components/MainPageMovies";
 
 export default function Home() {
   return (
     <div>
       <Poster />
-      <Upcoming />
-      <Popular />
-      <TopRated />
+      <MainPageMovies />
     </div>
   );
 }

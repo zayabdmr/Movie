@@ -29,12 +29,13 @@ type dataTypes = {
 };
 
 export default function similarMovieList() {
-  const searchParams = useSearchParams();
-  let defaultPage = searchParams.get("page");
   const [movieData, setMovieData] = useState<pageType>();
-  const [currentPage, setCurrentPage] = useState(defaultPage);
+  const [currentPage, setCurrentPage] = useState(1);
   const router = useRouter();
   const params = useParams();
+
+  const { id } = useParams();
+  const searchParams = useSearchParams();
 
   useEffect(() => {
     const fetchMovies = async () => {
@@ -49,9 +50,7 @@ export default function similarMovieList() {
     };
 
     fetchMovies();
-  }, []);
-
-  console.log(movieData, "data");
+  }, [currentPage]);
 
   return (
     <div>
@@ -68,52 +67,72 @@ export default function similarMovieList() {
               id={value.id}
               image={imageUrl(value.poster_path)}
               rating={value.vote_average}
-              className="w-[230px] "
+              className="w-[230px]"
             />
           ))}
         </div>
 
         <Pagination>
           <PaginationContent>
-            {currentPage !== 1 && (
+            {/* Өмнөх хуудас руу шилжих товч */}
+            {currentPage > 1 && (
               <PaginationItem>
                 <PaginationPrevious
                   onClick={() => setCurrentPage(currentPage - 1)}
                 />
               </PaginationItem>
             )}
+
+            {/* Эхний хуудас болон "..." тэмдэглэгээ */}
             {currentPage > 4 && (
-              <PaginationItem>
-                <PaginationLink href="?page=1">1</PaginationLink>
-              </PaginationItem>
+              <>
+                <PaginationItem>
+                  <PaginationLink onClick={() => setCurrentPage(1)}>
+                    1
+                  </PaginationLink>
+                </PaginationItem>
+                <PaginationItem>
+                  <PaginationEllipsis />
+                </PaginationItem>
+              </>
             )}
-            {currentPage > 4 && (
-              <PaginationItem>
-                <PaginationEllipsis />
-              </PaginationItem>
+
+            {/* Одоогийн хуудас болон түүний өмнөх, дараагийн хуудаснууд */}
+            {[...Array(3)].map((_, i) => {
+              const page = currentPage - 1 + i;
+              return (
+                page > 0 &&
+                page <= (movieData?.total_pages ?? 1) && (
+                  <PaginationItem key={page}>
+                    <PaginationLink
+                      isActive={page === currentPage}
+                      onClick={() => setCurrentPage(page)}
+                    >
+                      {page}
+                    </PaginationLink>
+                  </PaginationItem>
+                )
+              );
+            })}
+
+            {/* Сүүлчийн хуудас болон "..." тэмдэглэгээ */}
+            {currentPage < (movieData?.total_pages ?? 1) - 3 && (
+              <>
+                <PaginationItem>
+                  <PaginationEllipsis />
+                </PaginationItem>
+                <PaginationItem>
+                  <PaginationLink
+                    onClick={() => setCurrentPage(movieData?.total_pages ?? 1)}
+                  >
+                    {movieData?.total_pages}
+                  </PaginationLink>
+                </PaginationItem>
+              </>
             )}
-            {currentPage !== 1 && (
-              <PaginationItem>
-                <PaginationLink>{currentPage - 1}</PaginationLink>
-              </PaginationItem>
-            )}
-            <PaginationItem>
-              <PaginationLink isActive={currentPage == currentPage}>
-                {currentPage}
-              </PaginationLink>
-            </PaginationItem>
-            <PaginationItem>
-              <PaginationLink>{currentPage + 1}</PaginationLink>
-            </PaginationItem>
-            {(movieData?.total_pages as number) - 5 !== currentPage && (
-              <PaginationItem>
-                <PaginationEllipsis />
-              </PaginationItem>
-            )}
-            <PaginationItem>
-              <PaginationLink>{movieData?.total_pages}</PaginationLink>
-            </PaginationItem>
-            {currentPage !== movieData?.total_pages && (
+
+            {/* Дараагийн хуудас руу шилжих товч */}
+            {currentPage < (movieData?.total_pages ?? 1) && (
               <PaginationItem>
                 <PaginationNext
                   onClick={() => setCurrentPage(currentPage + 1)}

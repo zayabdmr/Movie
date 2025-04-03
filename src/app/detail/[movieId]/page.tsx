@@ -65,7 +65,7 @@ export default function Detail() {
   const stars = movieDetailCredits?.cast?.slice(0, 3) || [];
 
   return (
-    <div className="px-[180px]">
+    <div className="px-[180px] pt-[52px] pb-[80px]">
       {movieDetailData ? (
         <DetailCard
           {...movieDetailData}

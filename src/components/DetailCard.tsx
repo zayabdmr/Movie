@@ -36,16 +36,9 @@ type DetailCardProps = {
 };
 
 type TrailerTypes = {
-  iso_639_1: string;
-  iso_3166_1: string;
-  name: string;
   key: string;
   site: string;
-  size: number;
   type: string;
-  official: boolean;
-  published_at: string;
-  id: string;
 };
 
 export const DetailCard = ({
@@ -64,7 +57,6 @@ export const DetailCard = ({
   adult,
 }: DetailCardProps) => {
   const [Trailer, setTrailer] = useState<TrailerTypes[]>([]);
-
   const params = useParams();
 
   useEffect(() => {
@@ -83,7 +75,7 @@ export const DetailCard = ({
   }, []);
 
   return (
-    <div className="w-screen ">
+    <div className="w-screen">
       <div className="flex justify-between items-center">
         <div className="text-[#09090B]">
           <h1 className="text-[36px] font-bold">{title}</h1>
@@ -100,7 +92,7 @@ export const DetailCard = ({
         </div>
 
         <div>
-          <p className="text-[#09090B] text-3 font-medium">Rating</p>
+          <p className="text-[#09090B] text-30 font-medium">Rating</p>
           <div className="flex gap-1">
             <Star
               fill="yellow"
@@ -128,7 +120,7 @@ export const DetailCard = ({
       <div className="flex w-full gap-[32px]">
         <img
           src={imageUrl(poster_path ?? "/fallback-image.jpg")}
-          alt={`detailPoster`}
+          alt="detailPoster"
           width={290}
           height={428}
           className=" !static rounded-[8px] !h-[428px]"

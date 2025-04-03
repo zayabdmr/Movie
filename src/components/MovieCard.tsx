@@ -20,7 +20,7 @@ export const MovieCard = ({
     <Link href={`/detail/${id}`}>
       <div
         className={
-          `bg-white rounded-lg shadow-md overflow-hidden w-[230px] hover:bg-gray-100 transition` +
+          `bg-white rounded-lg shadow-md overflow-hidden hover:bg-gray-100 transition ` +
           className
         }
       >
@@ -32,13 +32,11 @@ export const MovieCard = ({
             <p className="text-[#09090B] text-[14px] font-medium">
               {rating}
 
-              <span className="text-[#71717A] text-[12px] font-normal">
-                /10
-              </span>
+              <span className="text-[#71717A] text-[12px]">/10</span>
             </p>
           </div>
 
-          <h3 className="w-[100%] h-[60px] text-[18px] text-[#09090B] font-normal">
+          <h3 className="w-[100%] h-[60px] text-[18px] text-[#09090B]">
             {title}
           </h3>
         </div>
