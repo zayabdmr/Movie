@@ -22,6 +22,6 @@ export const DetailNames = ({
         <p>N/A</p>
       )}
     </div>
-    <div className="border-t border-[#E4E4E7] w-full pb-5"></div>
+    <div className="border-t border-[#E4E4E7] pb-5"></div>
   </div>
 );

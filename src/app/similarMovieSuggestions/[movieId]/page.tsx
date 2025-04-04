@@ -16,7 +16,6 @@ import {
 } from "@/components/ui/pagination";
 
 type pageType = {
-  total_pages: number | undefined;
   results: dataTypes[];
 };
 
@@ -56,7 +55,7 @@ export default function similarMovieList() {
     <div>
       <div className="flex flex-col">
         <h1 className="font-semibold flex px-[80px] pt-[52px] pb-[32px] text-[30px]">
-          More Like This
+          More Like this
         </h1>
 
         <div className="flex flex-wrap justify-start gap-6 px-[80px]">
@@ -67,14 +66,13 @@ export default function similarMovieList() {
               id={value.id}
               image={imageUrl(value.poster_path)}
               rating={value.vote_average}
-              className="w-[230px]"
+              className="w-[230px] h-[480px]"
             />
           ))}
         </div>
 
-        <Pagination>
+        <Pagination className="flex justify-end pr-[80px] pb-[100px]">
           <PaginationContent>
-            {/* Өмнөх хуудас руу шилжих товч */}
             {currentPage > 1 && (
               <PaginationItem>
                 <PaginationPrevious
@@ -83,7 +81,6 @@ export default function similarMovieList() {
               </PaginationItem>
             )}
 
-            {/* Эхний хуудас болон "..." тэмдэглэгээ */}
             {currentPage > 4 && (
               <>
                 <PaginationItem>
@@ -97,12 +94,11 @@ export default function similarMovieList() {
               </>
             )}
 
-            {/* Одоогийн хуудас болон түүний өмнөх, дараагийн хуудаснууд */}
             {[...Array(3)].map((_, i) => {
               const page = currentPage - 1 + i;
               return (
                 page > 0 &&
-                page <= (movieData?.total_pages ?? 1) && (
+                page <= 500 && (
                   <PaginationItem key={page}>
                     <PaginationLink
                       isActive={page === currentPage}
@@ -115,28 +111,22 @@ export default function similarMovieList() {
               );
             })}
 
-            {/* Сүүлчийн хуудас болон "..." тэмдэглэгээ */}
-            {currentPage < (movieData?.total_pages ?? 1) - 3 && (
+            {currentPage < 500 - 3 && (
               <>
                 <PaginationItem>
                   <PaginationEllipsis />
                 </PaginationItem>
                 <PaginationItem>
-                  <PaginationLink
-                    onClick={() => setCurrentPage(movieData?.total_pages ?? 1)}
-                  >
-                    {movieData?.total_pages}
+                  <PaginationLink onClick={() => setCurrentPage(500)}>
+                    {500}
                   </PaginationLink>
                 </PaginationItem>
               </>
             )}
 
-            {/* Дараагийн хуудас руу шилжих товч */}
-            {currentPage < (movieData?.total_pages ?? 1) && (
+            {currentPage < 500 && (
               <PaginationItem>
-                <PaginationNext
-                  onClick={() => setCurrentPage(currentPage + 1)}
-                />
+                <PaginationNext onClick={() => setCurrentPage(500)} />
               </PaginationItem>
             )}
           </PaginationContent>

@@ -1,5 +1,4 @@
 "use client";
-
 import { useEffect, useState } from "react";
 import { useParams, useRouter } from "next/navigation";
 import { DetailCard } from "@/components/DetailCard";
@@ -35,7 +34,6 @@ export default function Detail() {
   const [movieDetailCredits, setMovieDetailCredits] =
     useState<MovieCreditsProps | null>(null);
   const params = useParams();
-
   const router = useRouter();
 
   useEffect(() => {
@@ -65,7 +63,7 @@ export default function Detail() {
   const stars = movieDetailCredits?.cast?.slice(0, 3) || [];
 
   return (
-    <div className="px-[180px] pt-[52px] pb-[80px]">
+    <div className="px-[180px] pt-[52px] pb-[112px] ">
       {movieDetailData ? (
         <DetailCard
           {...movieDetailData}

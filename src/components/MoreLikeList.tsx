@@ -48,7 +48,7 @@ export const MoreLikeList = ({}: any) => {
   }, []);
 
   return (
-    <div className="max-w-[1380px] mx-auto">
+    <div className="w-full">
       <div className="flex justify-between items-center">
         <h2 className="text-[24px] font-semibold pb-[32px]">More like this</h2>
         <Button
@@ -61,7 +61,7 @@ export const MoreLikeList = ({}: any) => {
         </Button>
       </div>
 
-      <div className="flex flex-wrap justify-start gap-8">
+      <div className="flex flex-wrap justify-start gap-10">
         {movieData?.slice(0, 5).map((value: any) => (
           <MovieCard
             key={value.id}
@@ -69,7 +69,7 @@ export const MoreLikeList = ({}: any) => {
             id={value.id}
             image={imageUrl(value.poster_path)}
             rating={value.vote_average}
-            className="w-[220px]"
+            className="w-[200px] h-[450px]"
           />
         ))}
       </div>

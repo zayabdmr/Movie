@@ -22,7 +22,7 @@ export const SearchMovie = ({ inputValue }: { inputValue: string }) => {
   const router = useRouter();
 
   const handleOnClick = (id: number) => {
-    router.push(`/details/${id}`);
+    router.push(`/detail/${id}`);
     setMovieResults([]);
   };
 

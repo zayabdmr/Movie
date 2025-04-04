@@ -75,7 +75,7 @@ export const DetailCard = ({
   }, []);
 
   return (
-    <div className="w-screen">
+    <div className="w-full">
       <div className="flex justify-between items-center">
         <div className="text-[#09090B]">
           <h1 className="text-[36px] font-bold">{title}</h1>
@@ -117,7 +117,7 @@ export const DetailCard = ({
         </div>
       </div>
 
-      <div className="flex w-full gap-[32px]">
+      <div className="flex w-full gap-[32px] pt-[24px] pb-[32px]">
         <img
           src={imageUrl(poster_path ?? "/fallback-image.jpg")}
           alt="detailPoster"

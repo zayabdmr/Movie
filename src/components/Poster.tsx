@@ -8,11 +8,11 @@ import {
 } from "@/components/ui/carousel";
 import { useEffect, useState } from "react";
 import { axiosInstance, imageUrl } from "@/lib/utils";
-import { PosterCard } from ".";
+import { PosterCard } from "./PosterCard";
 
 type myTypes = {
   overview: string;
-  poster_path: string;
+  backdrop_path: string;
   title: string;
   vote_average: number;
   id: string;
@@ -48,7 +48,7 @@ export function Poster() {
   };
 
   return (
-    <div className="w-full h-[700px] flex items-center justify-center overflow-hidden pt-[24px]">
+    <div className="w-full h-[800px] flex items-center justify-center overflow-hidden pt-[24px]">
       <div className="w-full h-full">
         <Carousel className="w-full relative">
           <CarouselContent
@@ -59,12 +59,12 @@ export function Poster() {
             }}
           >
             {movieData.map((value, index) => (
-              <CarouselItem key={index} className="w-full h-[700px]">
+              <CarouselItem key={index} className="w-full h-[800px]">
                 <div className="w-full h-screen">
                   <PosterCard
                     id={value.id}
                     title={value.title}
-                    image={imageUrl(value.poster_path)}
+                    image={imageUrl(value.backdrop_path)}
                     rating={value.vote_average}
                     description={value.overview}
                   />
