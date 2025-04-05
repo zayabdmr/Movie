@@ -24,7 +24,7 @@ export const Upcoming = () => {
   };
 
   const handleClick = (movieType: string) => {
-    router.push(`/upcoming_moreList/${movieType}`);
+    router.push(`/seeMore/${movieType}`);
   };
 
   const params = useParams();
@@ -49,7 +49,7 @@ export const Upcoming = () => {
 
   return (
     <div className="w-screen px-[80px] py-[52px]">
-      <div className="flex justify-between items-center text-[#09090B]">
+      <div className="flex justify-between items-center text-[#09090B] dark:text-white">
         <h2 className="text-[24px] font-semibold pb-[32px]">Upcoming</h2>
         <Button
           className="text-[14px] font-medium"

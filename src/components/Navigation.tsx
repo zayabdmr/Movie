@@ -19,6 +19,7 @@ import { useDebounce } from "@uidotdev/usehooks";
 import { SearchMovie } from "./SearchMovie";
 import { useRouter } from "next/navigation";
 import { axiosInstance } from "@/lib/utils";
+import DarkModeToggle from "./DarkModeToggle";
 
 type genreTypes = {
   id: number;
@@ -62,8 +63,9 @@ export const Navigation = ({}) => {
 
       <div className="flex gap-4 items-center">
         <DropdownMenu>
-          <DropdownMenuTrigger className="flex w-[97px] h-[36px] py-[8px] px-[16px] font-medium justify-center items-center gap-2 rounded-md border border-[#E4E4E7] bg-white shadow-sm">
-            <ChevronDown className="w-4 h-4 stroke-[#18181B]" /> Genre
+          <DropdownMenuTrigger className="flex w-[97px] h-[36px] py-[8px] px-[16px] font-medium justify-center items-center gap-2 rounded-md border border-[#E4E4E7] bg-white shadow-sm ">
+            <ChevronDown className="w-4 h-4 stroke-[#18181B] text-white" />{" "}
+            Genre
           </DropdownMenuTrigger>
 
           <DropdownMenuContent className="w-[577px] pl-[300px] p-4 flex flex-col gap-4 rounded-md border border-[#E4E4E7] bg-white shadow-lg">
@@ -95,7 +97,7 @@ export const Navigation = ({}) => {
         </DropdownMenu>
 
         <div className="flex items-center w-[400px] h-[36px] px-3 py-2 rounded-md border border-[#E4E4E7]">
-          <Search className="w-4 h-4 opacity-50 text-[#09090B]" />
+          <Search className="w-4 h-4 opacity-50 text-[#09090B] dark:text-white" />
 
           <Input
             placeholder="Search.."
@@ -109,9 +111,11 @@ export const Navigation = ({}) => {
         </div>
       </div>
 
-      <Button className="w-[40px] h-[40px] flex items-center justify-center rounded-md border border-[#E4E4E7] bg-white shadow-md hover:bg-gray-100 transition">
+      {/* <Button className="w-[40px] h-[40px] flex items-center justify-center rounded-md border border-[#E4E4E7] bg-white shadow-md hover:bg-gray-100 transition">
         <Moon className="w-5 h-5 text-[#18181B] opacity-70" />
-      </Button>
+      </Button> */}
+
+      <DarkModeToggle />
     </div>
   );
 };

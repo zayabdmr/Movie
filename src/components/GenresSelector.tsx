@@ -34,7 +34,7 @@ export const GenresSelector = () => {
   }, []);
 
   return (
-    <div className="pl-20 w-[387px] text-[#09090B]">
+    <div className="pl-20 w-[387px] text-[#09090B] dark:text-white">
       <div className="pb-5">
         <h3 className="text-[24px] font-semibold">Genres</h3>
         <p className="text-[16px] font-normal">See lists of movies by genre</p>
