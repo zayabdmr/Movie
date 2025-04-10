@@ -6,31 +6,32 @@ import { ChevronRight } from "lucide-react";
 import { useRouter } from "next/navigation";
 import { axiosInstance } from "@/lib/utils";
 
-type genreTypes = {
+type Genre = {
   id: number;
   name: string;
 };
 
 export const GenresSelector = () => {
-  const [genres, setGenres] = useState<genreTypes[]>([]);
+  const [genres, setGenres] = useState<Genre[]>([]);
   const router = useRouter();
+
   const handleOnclick = (id: number) => {
     router.push(`/searchFilter?genres=${id}&page=1`);
   };
 
   useEffect(() => {
-    const fetchMovies = async () => {
+    const fetchGenres = async () => {
       try {
         const response = await axiosInstance.get(
           "genre/movie/list?language=en"
         );
         setGenres(response.data.genres);
       } catch (error) {
-        console.error("Error fetching movies:", error);
+        console.error("Error fetching genres:", error);
       }
     };
 
-    fetchMovies();
+    fetchGenres();
   }, []);
 
   return (
@@ -40,18 +41,22 @@ export const GenresSelector = () => {
         <p className="text-[16px] font-normal">See lists of movies by genre</p>
       </div>
 
-      <div className="flex flex-wrap gap-4 ">
-        {genres?.map((searchFilter) => (
-          <Badge
-            onClick={() => handleOnclick(searchFilter.id)}
-            key={searchFilter.id}
-            variant="outline"
-            className="flex items-center gap-1 px-3 py-[2px] pl-[10px] pr-1 text-[12px] border-[#D4D4D8] font-semibold hover:bg-gray-200 "
-          >
-            {searchFilter.name}
-            <ChevronRight className="w-[16px] h-[16px]" />
-          </Badge>
-        ))}
+      <div className="flex flex-wrap gap-4">
+        {genres.length > 0 ? (
+          genres.map((genre) => (
+            <Badge
+              onClick={() => handleOnclick(genre.id)}
+              key={genre.id}
+              variant="outline"
+              className="flex items-center gap-1 px-3 py-2 text-[12px] border-[#D4D4D8] font-semibold hover:bg-gray-200"
+            >
+              {genre.name}
+              <ChevronRight className="w-[16px] h-[16px]" />
+            </Badge>
+          ))
+        ) : (
+          <p className="text-[#71717A]">No genres available</p>
+        )}
       </div>
     </div>
   );

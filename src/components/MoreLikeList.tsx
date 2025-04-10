@@ -10,27 +10,19 @@ import { axiosInstance, imageUrl } from "@/lib/utils";
 type myTypes = {
   id: number;
   title: string;
-  video: boolean;
   vote_average: number;
   poster_path: string | null;
 };
 
-export const MoreLikeList = ({}: any) => {
+export const MoreLikeList = () => {
   const [movieData, setMovieData] = useState<myTypes[]>([]);
   const router = useRouter();
+  const params = useParams();
+  const movieId = params.movieId;
 
-  const handleOneClick = (movieId: number) => {
-    router.push(`/detail/${movieId}`);
-    setMovieData([]);
-  };
-
-  const handleOnclick = (movieId?: string) => {
+  const handleSeeMore = () => {
     router.push(`/similarMovieSuggestions/${movieId}`);
   };
-
-  const params = useParams();
-
-  const movieId = params.movieId;
 
   useEffect(() => {
     const fetchMovies = async () => {
@@ -40,21 +32,23 @@ export const MoreLikeList = ({}: any) => {
         );
         setMovieData(response.data.results);
       } catch (error) {
-        console.error("Error fetching movies:", error);
+        console.error("Error fetching similar movies:", error);
       }
     };
 
-    fetchMovies();
-  }, []);
+    if (movieId) {
+      fetchMovies();
+    }
+  }, [movieId]);
 
   return (
     <div className="w-full">
       <div className="flex justify-between items-center">
         <h2 className="text-[24px] font-semibold pb-[32px]">More like this</h2>
         <Button
-          className="text-[14px] font-medium text-[#18181B] bg-[#fff]"
+          className="text-[14px] font-medium text-[#18181B] bg-white"
           variant="link"
-          onClick={() => handleOnclick(movieId?.toString())}
+          onClick={handleSeeMore}
         >
           See more
           <ArrowRight />
@@ -62,13 +56,15 @@ export const MoreLikeList = ({}: any) => {
       </div>
 
       <div className="flex flex-wrap justify-start gap-10">
-        {movieData?.slice(0, 5).map((value: any) => (
+        {movieData.slice(0, 5).map((movie) => (
           <MovieCard
-            key={value.id}
-            title={value.title}
-            id={value.id}
-            image={imageUrl(value.poster_path)}
-            rating={value.vote_average}
+            key={movie.id}
+            title={movie.title}
+            id={movie.id}
+            image={
+              movie.poster_path ? imageUrl(movie.poster_path) : "/no-image.png"
+            }
+            rating={movie.vote_average}
             className="w-[200px] h-[450px]"
           />
         ))}

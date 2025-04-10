@@ -1,10 +1,9 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import { useParams, useRouter, useSearchParams } from "next/navigation";
+import { useParams, useRouter } from "next/navigation";
 import { axiosInstance, imageUrl } from "@/lib/utils";
 import { MovieCard } from "@/components/MovieCard";
-
 import {
   Pagination,
   PaginationContent,
@@ -17,6 +16,7 @@ import {
 
 type pageType = {
   results: dataTypes[];
+  total_pages: number;
 };
 
 type dataTypes = {
@@ -27,20 +27,17 @@ type dataTypes = {
   poster_path: string;
 };
 
-export default function similarMovieList() {
-  const [movieData, setMovieData] = useState<pageType>();
+export default function SimilarMovieList() {
+  const [movieData, setMovieData] = useState<pageType | null>(null);
   const [currentPage, setCurrentPage] = useState(1);
+  const { movieId } = useParams(); // Corrected usage of useParams
   const router = useRouter();
-  const params = useParams();
-
-  const { id } = useParams();
-  const searchParams = useSearchParams();
 
   useEffect(() => {
     const fetchMovies = async () => {
       try {
         const response = await axiosInstance.get(
-          `movie/${params.movieId}/similar?language=en-US&page=${currentPage}`
+          `movie/${movieId}/similar?language=en-US&page=${currentPage}`
         );
         setMovieData(response.data);
       } catch (error) {
@@ -49,7 +46,7 @@ export default function similarMovieList() {
     };
 
     fetchMovies();
-  }, [currentPage]);
+  }, [currentPage, movieId]);
 
   return (
     <div>
@@ -71,66 +68,72 @@ export default function similarMovieList() {
           ))}
         </div>
 
-        <Pagination className="flex justify-end pr-[80px] pb-[100px]">
-          <PaginationContent>
-            {currentPage > 1 && (
-              <PaginationItem>
-                <PaginationPrevious
-                  onClick={() => setCurrentPage(currentPage - 1)}
-                />
-              </PaginationItem>
-            )}
-
-            {currentPage > 4 && (
-              <>
+        {movieData && (
+          <Pagination className="flex justify-end pr-[80px] pb-[100px]">
+            <PaginationContent>
+              {currentPage > 1 && (
                 <PaginationItem>
-                  <PaginationLink onClick={() => setCurrentPage(1)}>
-                    1
-                  </PaginationLink>
+                  <PaginationPrevious
+                    onClick={() => setCurrentPage(currentPage - 1)}
+                  />
                 </PaginationItem>
-                <PaginationItem>
-                  <PaginationEllipsis />
-                </PaginationItem>
-              </>
-            )}
+              )}
 
-            {[...Array(3)].map((_, i) => {
-              const page = currentPage - 1 + i;
-              return (
-                page > 0 &&
-                page <= 500 && (
-                  <PaginationItem key={page}>
-                    <PaginationLink
-                      isActive={page === currentPage}
-                      onClick={() => setCurrentPage(page)}
-                    >
-                      {page}
+              {currentPage > 3 && (
+                <>
+                  <PaginationItem>
+                    <PaginationLink onClick={() => setCurrentPage(1)}>
+                      1
                     </PaginationLink>
                   </PaginationItem>
-                )
-              );
-            })}
+                  <PaginationItem>
+                    <PaginationEllipsis />
+                  </PaginationItem>
+                </>
+              )}
 
-            {currentPage < 500 - 3 && (
-              <>
-                <PaginationItem>
-                  <PaginationEllipsis />
-                </PaginationItem>
-                <PaginationItem>
-                  <PaginationLink onClick={() => setCurrentPage(500)}>
-                    {500}
-                  </PaginationLink>
-                </PaginationItem>
-              </>
-            )}
+              {[...Array(3)].map((_, i) => {
+                const page = currentPage - 1 + i;
+                return (
+                  page > 0 &&
+                  page <= movieData.total_pages && (
+                    <PaginationItem key={page}>
+                      <PaginationLink
+                        isActive={page === currentPage}
+                        onClick={() => setCurrentPage(page)}
+                      >
+                        {page}
+                      </PaginationLink>
+                    </PaginationItem>
+                  )
+                );
+              })}
 
-            {currentPage < 500 && (
-              <PaginationItem>
-                <PaginationNext onClick={() => setCurrentPage(500)} />
-              </PaginationItem>
-            )}
-          </PaginationContent>
-        </Pagination>
+              {currentPage < movieData.total_pages - 2 && (
+                <>
+                  <PaginationItem>
+                    <PaginationEllipsis />
+                  </PaginationItem>
+                  <PaginationItem>
+                    <PaginationLink
+                      onClick={() => setCurrentPage(movieData.total_pages)}
+                    >
+                      {movieData.total_pages}
+                    </PaginationLink>
+                  </PaginationItem>
+                </>
+              )}
+
+              {currentPage < movieData.total_pages && (
+                <PaginationItem>
+                  <PaginationNext
+                    onClick={() => setCurrentPage(currentPage + 1)}
+                  />
+                </PaginationItem>
+              )}
+            </PaginationContent>
+          </Pagination>
+        )}
       </div>
     </div>
   );

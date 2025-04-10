@@ -15,7 +15,7 @@ type myTypes = {
   backdrop_path: string;
   title: string;
   vote_average: number;
-  id: string;
+  id: number;
 };
 
 export function Poster() {
@@ -50,30 +50,31 @@ export function Poster() {
   return (
     <div className="w-full h-[800px] flex items-center justify-center overflow-hidden pt-[24px]">
       <div className="w-full h-full">
-        <Carousel className="w-full relative">
+        <Carousel className="w-full relative overflow-hidden">
           <CarouselContent
-            className="h-full"
+            className="flex transition-transform duration-500 ease-in-out"
             style={{
               transform: `translateX(-${currentIndex * 100}%)`,
-              transition: "transform 0.5s ease-in-out",
             }}
           >
-            {movieData.map((value, index) => (
-              <CarouselItem key={index} className="w-full h-[800px]">
-                <div className="w-full h-screen">
-                  <PosterCard
-                    id={value.id}
-                    title={value.title}
-                    image={imageUrl(value.backdrop_path)}
-                    rating={value.vote_average}
-                    description={value.overview}
-                  />
-                </div>
+            {movieData.map((value) => (
+              <CarouselItem
+                key={value.id}
+                className="w-full flex-shrink-0 h-[800px]"
+              >
+                <PosterCard
+                  id={value.id.toString()}
+                  title={value.title}
+                  image={imageUrl(value.backdrop_path)}
+                  rating={value.vote_average}
+                  description={value.overview}
+                />
               </CarouselItem>
             ))}
           </CarouselContent>
 
-          <div className="absolute bottom-20 left-1/2 -translate-x-1/2 flex gap-2 ">
+          {/* Radio dots */}
+          <div className="absolute bottom-20 left-1/2 -translate-x-1/2 flex gap-2">
             {movieData.map((_, index) => (
               <input
                 key={index}
@@ -81,7 +82,7 @@ export function Poster() {
                 name="carousel"
                 checked={currentIndex === index}
                 onChange={() => setCurrentIndex(index)}
-                className="w-4 h-4 cursor-pointer accent-white"
+                className="w-4 h-4 cursor-pointer accent-white appearance-none rounded-full border border-white checked:bg-white"
               />
             ))}
           </div>

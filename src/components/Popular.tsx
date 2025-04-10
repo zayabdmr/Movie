@@ -2,7 +2,7 @@
 
 import { Button } from "@/components/ui/button";
 import { useEffect, useState } from "react";
-import { useParams, useRouter } from "next/navigation";
+import { useRouter } from "next/navigation";
 import { MovieCard } from "./MovieCard";
 import { ArrowRight } from "lucide-react";
 import { axiosInstance, imageUrl } from "@/lib/utils";
@@ -16,20 +16,11 @@ type myTypes = {
 
 export const Popular = () => {
   const [movieData, setMovieData] = useState<myTypes[]>([]);
-  const [moreList, setMoreList] = useState<myTypes[]>([]);
-
   const router = useRouter();
-  const handleOneClick = (movieId: number) => {
-    router.push(`/detail/${movieId}`);
-  };
 
   const handleClick = (movieType: string) => {
     router.push(`/seeMore/${movieType}`);
   };
-
-  const params = useParams();
-
-  const movieId = params.movieId;
 
   useEffect(() => {
     const fetchMovies = async () => {
@@ -38,7 +29,6 @@ export const Popular = () => {
           "movie/popular?language=en-US&page=1"
         );
         setMovieData(response.data.results);
-        setMoreList(response.data.results);
       } catch (error) {
         console.error("Error fetching movies:", error);
       }
@@ -54,7 +44,7 @@ export const Popular = () => {
         <Button
           className="text-[14px] font-medium"
           variant="link"
-          onClick={() => handleClick("upcoming")}
+          onClick={() => handleClick("popular")}
         >
           See more
           <ArrowRight />

@@ -2,7 +2,7 @@
 
 import { Button } from "@/components/ui/button";
 import { useEffect, useState } from "react";
-import { useParams, useRouter } from "next/navigation";
+import { useRouter } from "next/navigation";
 import { MovieCard } from "./MovieCard";
 import { ArrowRight } from "lucide-react";
 import { axiosInstance, imageUrl } from "@/lib/utils";
@@ -16,9 +16,8 @@ type myTypes = {
 
 export const TopRated = () => {
   const [movieData, setMovieData] = useState<myTypes[]>([]);
-  const [moreList, setMoreList] = useState<myTypes[]>([]);
-
   const router = useRouter();
+
   const handleOneClick = (movieId: number) => {
     router.push(`/detail/${movieId}`);
   };
@@ -27,10 +26,6 @@ export const TopRated = () => {
     router.push(`/seeMore/${movieType}`);
   };
 
-  const params = useParams();
-
-  const movieId = params.movieId;
-
   useEffect(() => {
     const fetchMovies = async () => {
       try {
@@ -38,7 +33,6 @@ export const TopRated = () => {
           "movie/top_rated?language=en-US&page=1"
         );
         setMovieData(response.data.results);
-        setMoreList(response.data.results);
       } catch (error) {
         console.error("Error fetching movies:", error);
       }
@@ -54,7 +48,7 @@ export const TopRated = () => {
         <Button
           className="text-[14px] font-medium"
           variant="link"
-          onClick={() => handleClick("upcoming")}
+          onClick={() => handleClick("top_rated")}
         >
           See more
           <ArrowRight />

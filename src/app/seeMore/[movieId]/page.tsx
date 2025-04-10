@@ -19,7 +19,6 @@
 
 //   return <div>amn</div>;
 // }
-
 "use client";
 
 import { useEffect, useState } from "react";
@@ -38,6 +37,7 @@ import {
 
 type pageType = {
   results: dataTypes[];
+  total_pages: number; // total_pages-г нэмсэн
 };
 
 type dataTypes = {
@@ -49,17 +49,19 @@ type dataTypes = {
 };
 
 export default function SeeMore() {
-  const { movieId } = useParams();
-  const [movieData, setMovieData] = useState<pageType>();
+  const { movieId } = useParams(); // `movieId`-ийг шууд авч байна
+  const [movieData, setMovieData] = useState<pageType | null>(null);
   const [currentPage, setCurrentPage] = useState(1);
   const searchParams = useSearchParams();
   const router = useRouter();
 
   useEffect(() => {
     const fetchMovieList = async () => {
+      if (!movieId) return; // movieId байхгүй бол фетч хийнэ үү
+
       try {
-        const { data } = await axiosInstance(
-          `movie/${movieId?.toString()}?language=en-US&page=${currentPage}`
+        const { data } = await axiosInstance.get(
+          `movie/${movieId}/similar?language=en-US&page=${currentPage}` // movieId-г хэрэглэж байна
         );
         setMovieData(data);
       } catch (error) {
@@ -89,66 +91,72 @@ export default function SeeMore() {
         ))}
       </div>
 
-      <Pagination className="flex justify-end pr-[80px] pb-[100px]">
-        <PaginationContent>
-          {currentPage > 1 && (
-            <PaginationItem>
-              <PaginationPrevious
-                onClick={() => setCurrentPage(currentPage - 1)}
-              />
-            </PaginationItem>
-          )}
-
-          {currentPage > 4 && (
-            <>
+      {movieData && (
+        <Pagination className="flex justify-end pr-[80px] pb-[100px]">
+          <PaginationContent>
+            {currentPage > 1 && (
               <PaginationItem>
-                <PaginationLink onClick={() => setCurrentPage(1)}>
-                  1
-                </PaginationLink>
+                <PaginationPrevious
+                  onClick={() => setCurrentPage(currentPage - 1)}
+                />
               </PaginationItem>
-              <PaginationItem>
-                <PaginationEllipsis />
-              </PaginationItem>
-            </>
-          )}
+            )}
 
-          {[...Array(3)].map((_, i) => {
-            const page = currentPage - 1 + i;
-            return (
-              page > 0 &&
-              page <= 500 && (
-                <PaginationItem key={page}>
-                  <PaginationLink
-                    isActive={page === currentPage}
-                    onClick={() => setCurrentPage(page)}
-                  >
-                    {page}
+            {currentPage > 3 && (
+              <>
+                <PaginationItem>
+                  <PaginationLink onClick={() => setCurrentPage(1)}>
+                    1
                   </PaginationLink>
                 </PaginationItem>
-              )
-            );
-          })}
+                <PaginationItem>
+                  <PaginationEllipsis />
+                </PaginationItem>
+              </>
+            )}
 
-          {currentPage < 497 && (
-            <>
-              <PaginationItem>
-                <PaginationEllipsis />
-              </PaginationItem>
-              <PaginationItem>
-                <PaginationLink onClick={() => setCurrentPage(500)}>
-                  500
-                </PaginationLink>
-              </PaginationItem>
-            </>
-          )}
+            {[...Array(3)].map((_, i) => {
+              const page = currentPage - 1 + i;
+              return (
+                page > 0 &&
+                page <= movieData.total_pages && (
+                  <PaginationItem key={page}>
+                    <PaginationLink
+                      isActive={page === currentPage}
+                      onClick={() => setCurrentPage(page)}
+                    >
+                      {page}
+                    </PaginationLink>
+                  </PaginationItem>
+                )
+              );
+            })}
 
-          {currentPage < 500 && (
-            <PaginationItem>
-              <PaginationNext onClick={() => setCurrentPage(currentPage + 1)} />
-            </PaginationItem>
-          )}
-        </PaginationContent>
-      </Pagination>
+            {currentPage < movieData.total_pages - 3 && (
+              <>
+                <PaginationItem>
+                  <PaginationEllipsis />
+                </PaginationItem>
+                <PaginationItem>
+                  <PaginationLink
+                    onClick={() => setCurrentPage(movieData.total_pages)}
+                  >
+                    {movieData.total_pages}
+                  </PaginationLink>
+                </PaginationItem>
+              </>
+            )}
+
+            {currentPage < movieData.total_pages && (
+              <PaginationItem>
+                <PaginationNext
+                  onClick={() => setCurrentPage(currentPage + 1)}
+                />
+              </PaginationItem>
+            )}
+          </PaginationContent>
+        </Pagination>
+      )}
     </div>
   );
 }

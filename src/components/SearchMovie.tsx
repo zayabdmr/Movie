@@ -37,7 +37,7 @@ export const SearchMovie = ({ inputValue }: { inputValue: string }) => {
         const res = await axiosInstance.get(
           `search/movie?query=${debouncedSearch}&language=en-US&page=1`
         );
-        setMovieResults(res.data.results || []);
+        setMovieResults(res.data?.results || []);
       } catch (err) {
         console.error("Error fetching movies:", err);
       }
@@ -47,14 +47,21 @@ export const SearchMovie = ({ inputValue }: { inputValue: string }) => {
   }, [debouncedSearch]);
 
   return (
-    <div className="w-fit h-fit border border-[#E4E4E7] rounded-sm">
+    <div className="w-[550px] border border-[#E4E4E7] rounded-sm bg-white">
       {movieResults.slice(0, 5).map((value, index) => (
-        <div key={value.id} className="p-3 hover:bg-gray-100 rounded-lg">
-          <div className="w-[550px] px-3 rounded-[8px] flex gap-4 bg-white h-fit">
+        <div
+          key={value.id}
+          className={`p-3 hover:bg-gray-100 rounded-lg ${
+            index !== movieResults.slice(0, 5).length - 1
+              ? "border-b border-gray-300"
+              : ""
+          }`}
+        >
+          <div className="flex gap-4">
             <Image
               src={imageUrl(value.poster_path)}
-              alt={`searchImage`}
-              width={70}
+              alt={`Poster for ${value.title}`}
+              width={87}
               height={100}
               className="rounded-[6px] w-[87px] h-[100px]"
             />
@@ -64,46 +71,45 @@ export const SearchMovie = ({ inputValue }: { inputValue: string }) => {
                   {value.title}
                 </h4>
 
-                <div className="flex gap-1 items-center">
-                  <Star
-                    fill="yellow"
-                    color="yellow"
-                    className="pt-[2px] w-4 h-4"
-                  />
-
+                <div className="flex gap-1 items-center mt-1">
+                  <Star fill="yellow" color="yellow" className="w-4 h-4" />
                   <p className="text-[14px] text-[#09090B] font-medium">
-                    {value.vote_average &&
-                      `${(Math.round(value.vote_average * 10) / 10).toFixed(
-                        1
-                      )}`}
+                    {value.vote_average
+                      ? `${(Math.round(value.vote_average * 10) / 10).toFixed(
+                          1
+                        )}`
+                      : "N/A"}
                     <span className="text-[12px] text-[#71717A] font-normal">
                       /10
                     </span>
                   </p>
                 </div>
               </div>
-              <div className="flex justify-between w-full items-center">
+
+              <div className="flex justify-between items-center mt-2">
                 <p className="text-[14px] text-[#09090B] font-medium">
-                  {value.release_date.slice(0, 4)}
+                  {value.release_date?.slice(0, 4)}
                 </p>
                 <Button
                   className="text-[14px] font-medium text-[#09090B] gap-[8px]"
                   variant="link"
                   onClick={() => handleOnClick(value.id)}
                 >
-                  See more <ArrowRight />
+                  See more <ArrowRight size={16} />
                 </Button>
               </div>
             </div>
           </div>
-
-          <div className="pt-2 border-b border-gray-300"></div>
         </div>
       ))}
+
       {movieResults.length > 5 && (
-        <p className="text-[14px] text-[#09090B] font-medium py-4 px-8">
-          See all results for "{inputValue}"
-        </p>
+        <div className="py-4 text-center">
+          <p className="text-[14px] text-[#09090B] font-medium">
+            See all results for "
+            <span className="font-semibold">{inputValue}</span>"
+          </p>
+        </div>
       )}
     </div>
   );
