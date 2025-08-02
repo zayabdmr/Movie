@@ -4,12 +4,12 @@ import { Phone } from "lucide-react";
 
 export const Footer = () => {
   return (
-    <div className="bg-[#4338CA] text-[#f2f2f5] py-10 w-screen h-[280px]">
-      <div className="flex px-20 w-screen justify-between">
+    <div className="bg-[#4338CA] text-[#f2f2f5] py-10 w-screen h-[220px]">
+      <div className="flex justify-between w-screen px-20">
         <div className="gap-3 pr-30">
-          <div className="gap-2 flex pb-3">
+          <div className="flex gap-2 pb-3">
             <Film />
-            <p className="text-4 italic font-bold">Movie Z</p>
+            <p className="italic font-bold text-4">Movie Z</p>
           </div>
           <div>
             <p className="text-[14px] font-normal">
@@ -44,7 +44,7 @@ export const Footer = () => {
           </div>
 
           <div className="text-[14px]">
-            <h3 className="font-normal pb-3">Follow us</h3>
+            <h3 className="pb-3 font-normal">Follow us</h3>
             <div className="flex gap-4 font-medium">
               <a href="https://www.facebook.com/">Facebook</a>
               <a href="https://www.instagram.com/">Instagram</a>

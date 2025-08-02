@@ -1,9 +1,9 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import { useSearchParams, useRouter } from "next/navigation";
+import { useSearchParams } from "next/navigation";
 import { axiosInstance, imageUrl } from "@/lib/utils";
-import { MovieCard } from "@/components/MovieCard";
+import { MovieCard } from "@/app/detail/[movieId]/components/MovieCard";
 import {
   Pagination,
   PaginationContent,
@@ -16,61 +16,81 @@ import {
 
 type PageType = {
   results: DataTypes[];
+  total_results: number;
 };
 
 type DataTypes = {
   id: number;
   title: string;
-  video: boolean;
   vote_average: number;
   poster_path: string;
 };
 
 export const GenresMovie = () => {
   const searchParams = useSearchParams();
-  const router = useRouter();
   const genreId = searchParams.get("genre") || "16";
   const [movieData, setMovieData] = useState<PageType | null>(null);
   const [currentPage, setCurrentPage] = useState(1);
+  const [genreName, setGenreName] = useState("Animation");
 
   useEffect(() => {
-    const fetchMovieList = async () => {
+    const fetchGenreName = async () => {
       try {
-        const { data } = await axiosInstance(
+        const { data } = await axiosInstance.get(
+          "genre/movie/list?language=en"
+        );
+        const genre = data.genres.find((g: any) => g.id === Number(genreId));
+        setGenreName(genre ? genre.name : "Movies");
+      } catch (error) {
+        console.error("Error fetching genre name:", error);
+      }
+    };
+    fetchGenreName();
+  }, [genreId]);
+
+  useEffect(() => {
+    const fetchMovies = async () => {
+      try {
+        const { data } = await axiosInstance.get(
           `/discover/movie?with_genres=${genreId}&language=en-US&page=${currentPage}`
         );
         setMovieData(data);
       } catch (error) {
-        console.error("Error fetching movie data:", error);
+        console.error("Error fetching movie list:", error);
       }
     };
-
-    fetchMovieList();
+    fetchMovies();
   }, [currentPage, genreId]);
 
+  const totalPages = 500;
+
   return (
-    <div className="pt-[122px]">
-      <h4 className="text-[#09090B] text-[20px] font-semibold">
+    <section className="pt-20">
+      <h2 className="text-2xl sm:text-3xl font-bold mb-8 text-[#09090B] dark:text-white">
         {movieData
-          ? `${movieData.results.length} titles in “Animation”`
+          ? `${movieData.total_results.toLocaleString()} titles in ${genreName}`
           : "Loading..."}
-      </h4>
+      </h2>
 
-      <div className="flex flex-col">
-        <div className="flex flex-wrap justify-start gap-6 px-[80px]">
-          {movieData?.results.map((value) => (
-            <MovieCard
-              key={value.id}
-              title={value.title}
-              id={value.id}
-              image={imageUrl(value.poster_path)}
-              rating={value.vote_average}
-              className="w-[230px] h-[480px]"
-            />
-          ))}
-        </div>
+      <div className="grid grid-cols-2 gap-6 sm:grid-cols-3 md:grid-cols-4 xl:grid-cols-5">
+        {movieData?.results.map((movie, index) => (
+          <MovieCard
+            key={movie.id}
+            title={movie.title}
+            id={movie.id}
+            image={imageUrl(movie.poster_path)}
+            rating={movie.vote_average}
+            className="cursor-pointer rounded-xl overflow-hidden
+              bg-white dark:bg-[#18181B]
+              shadow-md hover:shadow-lg dark:hover:shadow-blue-800
+              transform transition-all duration-500 ease-out hover:scale-105
+              fade-in"
+          />
+        ))}
+      </div>
 
-        <Pagination className="flex justify-end pr-[80px] pb-[100px]">
+      {movieData && movieData.total_results > 0 && (
+        <Pagination className="flex justify-end pb-20 mt-12">
           <PaginationContent>
             {currentPage > 1 && (
               <PaginationItem>
@@ -93,11 +113,10 @@ export const GenresMovie = () => {
               </>
             )}
 
-            {[...Array(3)].map((_, i) => {
-              const page = currentPage - 1 + i;
-              return (
+            {[currentPage - 1, currentPage, currentPage + 1].map(
+              (page) =>
                 page > 0 &&
-                page <= 500 && (
+                page <= totalPages && (
                   <PaginationItem key={page}>
                     <PaginationLink
                       isActive={page === currentPage}
@@ -107,23 +126,22 @@ export const GenresMovie = () => {
                     </PaginationLink>
                   </PaginationItem>
                 )
-              );
-            })}
+            )}
 
-            {currentPage < 497 && (
+            {currentPage < totalPages - 2 && (
               <>
                 <PaginationItem>
                   <PaginationEllipsis />
                 </PaginationItem>
                 <PaginationItem>
-                  <PaginationLink onClick={() => setCurrentPage(500)}>
-                    500
+                  <PaginationLink onClick={() => setCurrentPage(totalPages)}>
+                    {totalPages}
                   </PaginationLink>
                 </PaginationItem>
               </>
             )}
 
-            {currentPage < 500 && (
+            {currentPage < totalPages && (
               <PaginationItem>
                 <PaginationNext
                   onClick={() => setCurrentPage(currentPage + 1)}
@@ -132,7 +150,7 @@ export const GenresMovie = () => {
             )}
           </PaginationContent>
         </Pagination>
-      </div>
-    </div>
+      )}
+    </section>
   );
 };
